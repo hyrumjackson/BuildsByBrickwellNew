@@ -24,38 +24,48 @@ namespace BuildsByBrickwellNew.Migrations
 
             modelBuilder.Entity("BuildsByBrickwellNew.Models.Customer", b =>
                 {
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("customer_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CustomerId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
-                    b.Property<double?>("Age")
-                        .HasColumnType("float")
+                    b.Property<int?>("Age")
+                        .HasColumnType("int")
                         .HasColumnName("age");
 
-                    b.Property<string>("BirthDate")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<string>("AspNetUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2")
                         .HasColumnName("birth_date");
 
                     b.Property<string>("CountryOfResidence")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_residence");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("gender");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("last_name");
 
                     b.HasKey("CustomerId");
+
+                    b.HasIndex("AspNetUserId");
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -150,12 +160,12 @@ namespace BuildsByBrickwellNew.Migrations
 
             modelBuilder.Entity("BuildsByBrickwellNew.Models.Product", b =>
                 {
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("product_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)")
@@ -406,6 +416,17 @@ namespace BuildsByBrickwellNew.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("BuildsByBrickwellNew.Models.Customer", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("AspNetUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -25,12 +25,5 @@ namespace BuildsByBrickwellNew.Models
         // Age can be computed from BirthDate, so you might not need to store it
         // But if you do, consider using int instead of double
         public int? Age { get; set; }
-
-        // Foreign key property to link to AspNetUsers
-        [ForeignKey("IdentityUser")]
-        public string AspNetUserId { get; set; }
-
-        // Navigation property to the IdentityUser
-        public virtual IdentityUser? IdentityUser { get; set; }
     }
 }
