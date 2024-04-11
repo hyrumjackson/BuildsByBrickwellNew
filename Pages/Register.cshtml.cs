@@ -7,10 +7,12 @@ namespace BuildsByBrickwellNew.Pages
     public class RegisterModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager)
+        public RegisterModel(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -31,9 +33,20 @@ namespace BuildsByBrickwellNew.Pages
 
                 if (result.Succeeded)
                 {
+                    // Check if the "Customer" role exists
+                    if (!await _roleManager.RoleExistsAsync("Customer"))
+                    {
+                        // Create the "Customer" role if it doesn't exist
+                        await _roleManager.CreateAsync(new IdentityRole("Customer"));
+                    }
+
+                    // Add the user to the "Customer" role
+                    await _userManager.AddToRoleAsync(user, "Customer");
+
                     // Optionally, sign in the user here
                     return RedirectToPage("Index"); // Redirect to home page or login page
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -43,6 +56,7 @@ namespace BuildsByBrickwellNew.Pages
             // Something failed, redisplay form
             return Page();
         }
+
     }
 
 }

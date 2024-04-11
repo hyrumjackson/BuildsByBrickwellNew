@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication();
+
 var connectionString = builder.Configuration.GetConnectionString("IntexConnection");
 var dbPassword = builder.Configuration["DbPassword"];
 
