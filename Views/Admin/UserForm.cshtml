@@ -1,0 +1,40 @@
+﻿@* @model User
+@{
+    ViewData["Title"] = "User Record";
+}
+
+<h1>User Record</h1>
+<p>Please enter the username, email, and password for the user. Assign roles as needed.</p>
+<p>Thank you!</p>
+
+<form asp-action="UserForm" method="post">
+    <!-- Hidden field for the user ID in case of editing -->
+    <input type="hidden" asp-for="User.Id" />
+
+    <!-- Input field for the username -->
+    <label asp-for="User.UserName">Username: </label>
+    <input asp-for="User.UserName" />
+    <br />
+
+    <!-- Input field for the email -->
+    <label asp-for="User.Email">Email: </label>
+    <input asp-for="User.Email" />
+    <br />
+
+    <!-- Input field for the password -->
+    <label asp-for="Password">Password: </label>
+    <input asp-for="Password" type="password" />
+    <br />
+
+    <!-- Input field for roles; consider using a more appropriate control for multiple roles -->
+    <label asp-for="Roles">Roles: </label>
+    <input asp-for="Roles" />
+    <br />
+
+    <!-- Button to submit the form -->
+    <button type="submit">Submit User</button>
+
+    <!-- Displays validation errors summary -->
+    <div asp-validation-summary="All"></div>
+</form>
+ *@

@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BuildsByBrickwellNew.Models; // Ensure this using directive is correct for your Customer model
 
 namespace BuildsByBrickwellNew.Pages
 {
@@ -9,11 +10,14 @@ namespace BuildsByBrickwellNew.Pages
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IntexProjectContext _context; // Assuming this is your DbContext class name
 
-        public RegisterModel(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        // Inject ApplicationDbContext in the constructor
+        public RegisterModel(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IntexProjectContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         [BindProperty]
@@ -31,6 +35,13 @@ namespace BuildsByBrickwellNew.Pages
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
+
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime BirthDate { get; set; }
+            public string CountryOfResidence { get; set; }
+            public string Gender { get; set; }
+            public int Age { get; set; }
         }
 
 
@@ -65,8 +76,22 @@ namespace BuildsByBrickwellNew.Pages
                     // Add the user to the "Customer" role
                     await _userManager.AddToRoleAsync(user, "Customer");
 
-                    // Optionally, sign in the user here
-                    return RedirectToPage("Login"); // Redirect to home page or login page
+                    // Create the Customer record
+                    var customer = new Customer
+                    {
+                        AspNetUserId = user.Id, // Ensure this property exists in your Customer model
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        BirthDate = Input.BirthDate,
+                        CountryOfResidence = Input.CountryOfResidence,
+                        Gender = Input.Gender,
+                        Age = Input.Age
+                    };
+                    _context.Customers.Add(customer);
+                    await _context.SaveChangesAsync();
+
+                    // Redirect or sign in the user here
+                    return RedirectToPage("Login");
                 }
                 else
                 {
