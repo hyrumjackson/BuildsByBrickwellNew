@@ -10,9 +10,20 @@ builder.Services.AddAuthentication();
 var connectionString = builder.Configuration.GetConnectionString("IntexConnection");
 var dbPassword = builder.Configuration["DbPassword"];
 
+
 connectionString += $"Password={dbPassword};";
 
 // Add services to the container.
+
+
+var configuration = builder.Configuration;
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+});
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IntexProjectContext>(options =>
