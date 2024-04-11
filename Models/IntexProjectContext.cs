@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildsByBrickwellNew.Models;
 
-public partial class IntexProjectContext : DbContext
+public partial class IntexProjectContext : IdentityDbContext
 {
     public IntexProjectContext()
     {
@@ -28,6 +29,7 @@ public partial class IntexProjectContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Customer>(entity =>
         {

@@ -1,0 +1,16 @@
+﻿@page
+@model RegisterModel
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <label asp-for="Input.Email">Email</label>
+    <input asp-for="Input.Email" class="form-control" />
+    <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+    <label asp-for="Input.Password">Password</label>
+    <input asp-for="Input.Password" type="password" class="form-control" />
+    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
