@@ -10,6 +10,8 @@ namespace BuildsByBrickwellNew.Controllers
     public class AdminController : Controller
     {
         private readonly IntexProjectContext _context;
+
+        // A variable defined that defines the _userManager
         private readonly UserManager<IdentityUser> _userManager; // Add this line
 
         // Update your constructor to include UserManager
@@ -95,6 +97,40 @@ namespace BuildsByBrickwellNew.Controllers
             var users = await _userManager.Users.ToListAsync();
             return View(users);
         }
+
+/*        [HttpGet]*/
+        /*public IActionResult Edit(int id)
+        {
+            var recordtoEdit = _context.Products
+                .Single(x => x.ProductId == id);
+
+            return View("ProductForm", recordtoEdit);
+        }
+
+        // HTTP POST action method to handle movie edit submission
+        [HttpPost]
+        public IActionResult Edit(Product updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("AdminProducts");
+        }*/
+
+/*        [HttpGet]
+        public async Task<IActionResult> Edit(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Create and populate a view model if needed
+            // Return the view for editing the user
+            return View(user);
+        }*/
+
+
 
     }
 }
