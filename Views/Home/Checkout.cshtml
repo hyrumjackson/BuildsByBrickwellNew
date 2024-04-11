@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+    // Dummy customer and payment data for demonstration
+    var customerName = "John Doe";
+    var shippingAddress = "123 Main St, Anytown, USA";
+    var billingAddress = "456 Elm St, Anytown, USA";
+    var paymentMethod = "Visa 0001";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Cart">Cart</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+    </ol>
+</nav>
+
+<h2>Information</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="p-3 mb-3" style="background-color: #f5f5f5;">
+            <div class="d-flex justify-content-between">
+                <h5>Shipping Address:</h5>
+                <button class="btn btn-light btn-sm">Change</button>
+            </div>
+            <strong>@customerName</strong>
+            <p>@shippingAddress</p>
+            <hr />
+            <div class="d-flex justify-content-between">
+                <h5>Payment Method:</h5>
+                <button class="btn btn-light btn-sm">Change</button>
+            </div>
+            <strong>Paying with @paymentMethod</strong>
+            <p>@billingAddress</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="summary-div p-3" style="border: 1px solid #ddd;">
+            <p>Subtotal (3 items): $399.97</p>
+            <p>Shipping: $5.99</p>
+            <p>Taxes: $3.45</p>
+            <hr />
+            <p><strong>Total: $62.42</strong></p>
+            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="OrderStatus" style="background-color: #00c3fc; color: #ffffff;">Place Your Order</a>
+        </div>
+    </div>
+</div>

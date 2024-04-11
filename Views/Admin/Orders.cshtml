@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Review Fraudulent Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    // Dummy data for fraudulent orders
+    var fraudulentOrders = new[]
+    {
+        new { Id = 101, CustomerName = "Alice Johnson", Amount = "$150.00", Date = "2023-04-12", Status = "Pending Review" },
+        new { Id = 102, CustomerName = "Bob Smith", Amount = "$220.50", Date = "2023-04-15", Status = "Pending Review" },
+        new { Id = 103, CustomerName = "Charlie Davis", Amount = "$99.99", Date = "2023-04-18", Status = "Pending Review" }
+    };
+}
+
+<div class="admin-fraud-orders-content">
+    <div class="admin-container">
+        <h2>Review Fraudulent Orders</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in fraudulentOrders)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.CustomerName</td>
+                        <td>@order.Amount</td>
+                        <td>@order.Date</td>
+                        <td>@order.Status</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" onclick="confirmFraud(@order.Id)">Confirm Fraud</button>
+                            <button class="btn btn-warning btn-sm" onclick="denyFraud(@order.Id)">Deny Fraud</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function confirmFraud(orderId) {
+        var confirmAction = confirm("Are you sure you want to confirm fraud for Order ID " + orderId + "?");
+        if (confirmAction) {
+            alert("Fraud confirmed for Order ID " + orderId + ". Action not implemented.");
+            // Implement action, such as updating the status or removing the order from the list
+        }
+    }
+
+    function denyFraud(orderId) {
+        var confirmAction = confirm("Are you sure you want to deny fraud for Order ID " + orderId + "?");
+        if (confirmAction) {
+            alert("Fraud denied for Order ID " + orderId + ". Action not implemented.");
+            // Implement action, such as updating the status or removing the order from the list
+        }
+    }
+</script>

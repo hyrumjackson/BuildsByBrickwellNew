@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Product
+@{
+    // Sets the title for the view.
+    ViewData["Title"] = "Product Record";
+}
+
+<h1>Product Record</h1>
+<!-- Provides instructions for entering product details. -->
+<p>You must enter the name, year, number of parts, price, primary color, secondary color, and category. If you choose not to, it will not record the product. Otherwise, you will get a confirmation that the product has been recorded. </p>
+<!-- Display a thank you message. -->
+<p>Thank you!</p>
+<form method="post">
+
+    <!-- Hidden field to store the ProductId -->
+    <input type="hidden" asp-for="ProductId" />
+    <br />
+    <!-- Input field for the product name -->
+    <label asp-for="Name">Name: </label>
+    <input asp-for="Name" />
+    <br />
+    <!-- Input field for the product year -->
+    <label asp-for="Year">Year: </label>
+    <input asp-for="Year" />
+    <br />
+    <!-- Input field for the number of parts -->
+    <label asp-for="NumParts">Number of Parts: </label>
+    <input asp-for="NumParts" />
+    <br />
+    <!-- Input field for the product price -->
+    <label asp-for="Price">Price: </label>
+    <input asp-for="Price" />
+    <br />
+    <!-- Input field for the primary color -->
+    <label asp-for="PrimaryColor">Primary Color: </label>
+    <input asp-for="PrimaryColor" />
+    <br />
+    <!-- Input field for the secondary color -->
+    <label asp-for="SecondaryColor">Secondary Color: </label>
+    <input asp-for="SecondaryColor" />
+    <br />
+    <!-- Input field for the product description -->
+    <label asp-for="Description">Description: </label>
+    <input asp-for="Description" />
+    <br />
+
+    <!-- Button to submit the product -->
+    <button type="submit">Submit the product</button>
+
+    <!-- Displays validation errors summary -->
+    <div asp-validation-summary="All"></div>
+</form>

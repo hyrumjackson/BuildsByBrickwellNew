@@ -1,0 +1,19 @@
+﻿@model IQueryable<string>
+
+<div class="d-grid gap-2">
+    @* Let's build the home tag *@
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Filter by Color
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" asp-controller="Home" asp-action="Products" asp-route-productColor="" asp-route-pageNum="">All Product Colors</a></li>
+            @foreach (string pc in Model ?? Enumerable.Empty<string>())
+            {
+                <li>
+                    <a class="dropdown-item @(pc == ViewBag.SelectedProductColor ? "active" : "")" asp-controller="Home" asp-action="Products" asp-route-productColor="@pc" asp-route-pageNum="1">@pc</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Order Status";
+
+    // Dummy data for fraud check
+    Random rnd = new Random();
+    bool isFraud = rnd.Next(2) == 0; // Randomly selects true or false
+}
+
+<h2>Order Status</h2>
+<hr />
+
+@if (isFraud)
+{
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Review in Progress</h4>
+        <p>Your order is currently under review to ensure transaction security. We appreciate your patience and will notify you as soon as the review is complete. Thank you for understanding the need to maintain a secure shopping environment.</p>
+    </div>
+}
+else
+{
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Order Confirmed</h4>
+        <p>Thank you for your purchase! Your order has been successfully placed and will be on its way to you soon. We're excited for you to receive your items and hope you enjoy them. Stay tuned for shipping updates!</p>
+    </div>
+}
+
+<a class="btn" asp-controller="Home" asp-action="Index" style="background-color: #00c3fc; color: #ffffff;">Continue Shopping</a>

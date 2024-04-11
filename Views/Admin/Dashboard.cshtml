@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    // Dummy data for demonstration
+    var totalUsers = 1024; // Simulated number of total users
+    var totalProducts = 256; // Simulated number of total products
+    var totalOrders = 320; // Simulated number of total orders
+}
+
+<div class="admin-dashboard-content">
+    <div class="admin-container">
+        <div class="py-3">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <p>Here's a quick overview of your site's activity:</p>
+        </div>
+
+        <div class="row">
+            <!-- Total Users Widget -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Users</h5>
+                        <p class="card-text">@totalUsers</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Products Widget -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Products</h5>
+                        <p class="card-text">@totalProducts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Orders Widget -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Orders</h5>
+                        <p class="card-text">@totalOrders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Admin Dashboard Sections -->
+        <div class="additional-sections">
+            <div class="mb-4">
+                <h4>Latest Orders</h4>
+                <!-- Latest orders table or summary here -->
+            </div>
+
+            <div>
+                <h4>Site Analytics</h4>
+                <!-- Graphs or charts representing site analytics here -->
+            </div>
+        </div>
+    </div>
+</div>

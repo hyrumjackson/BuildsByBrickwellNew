@@ -1,0 +1,45 @@
+﻿@page
+@model BuildsByBrickwellNew.Pages.CartModel
+@{
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+        {
+            <tr>
+                <td class="text-left">@l.Product.Name</td>
+                <td class="text-center">@l.Quantity</td>
+                <td class="text-right">@l.Product.Price</td>
+                <td class="text-right">@(((decimal)(l.Quantity * l.Product.Price)).ToString("C"))</td>
+                <td class="text-center">
+                    <form asp-page-handler="Remove" method="post">
+                        <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
+                        <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>

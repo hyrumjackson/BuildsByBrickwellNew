@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+    // Dummy Recommended Products Data
+    var recommendedProducts = new[]
+    {
+        new { Id = 2, Name = "Space Explorer", Category = "Space", Color = "Black", Price = 129.99, ImageUrl = "/img/space_lego.jpeg" },
+        new { Id = 3, Name = "Pirate Ship", Category = "Adventure", Color = "Brown", Price = 89.99, ImageUrl = "/img/lego_ship.png" },
+        new { Id = 4, Name = "Downtown Diner", Category = "City", Color = "Red", Price = 169.99, ImageUrl = "/img/lego_diner.png" }
+    };
+}
+
+<!-- Hero Section -->
+<section class="hero bg-light text-dark text-center py-5">
+    <div class="container">
+        <h1>Welcome to Builds by Brickwell</h1>
+        <p class="lead">Explore the world of endless creativity with our unique LEGO sets.</p>
+        <form asp-area="" asp-controller="Home" asp-action="Products" method="get" class="d-flex justify-content-center my-4">
+            <div class="input-group mb-3" style="max-width: 500px;">
+                <input type="text" class="form-control" placeholder="Search LEGO sets..." aria-label="Search LEGO sets" name="searchTerm">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Recommended Products Section -->
+<section class="recommended-products py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Recommended Products</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in recommendedProducts)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">$@product.Price</p>
+                            <a asp-area="" asp-controller="Home" asp-action="Cart" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2>About Builds by Brickwell</h2>
+                <p class="lead">Welcome to Builds by Brickwell, your ultimate destination for creative LEGO sets. Whether you're a seasoned builder or just starting out, we have something to spark everyone's imagination.</p>
+                <a class="btn" asp-area="" asp-controller="Home" asp-action="About" style="background-color: #00c3fc; color: #ffffff;">Learn More</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="~/img/about.png" class="img-fluid" alt="About Builds by Brickwell">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA Section -->
+<section class="cta bg-light text-center py-5">
+    <div class="container">
+        <h2>Ready to Build Your Masterpiece?</h2>
+        <p class="lead">Explore our collections and find the perfect set to start your next project.</p>
+        <a class="btn" asp-area="" asp-controller="Home" asp-action="Products" style="background-color: #00c3fc; color: #ffffff;">Browse Collections</a>
+    </div>
+</section>

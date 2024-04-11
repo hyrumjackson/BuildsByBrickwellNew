@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+    <style>
+        .admin-dashboard .card {
+            background-color: #f8f9fa;
+            border: 1px solid #e3e6f0;
+            border-radius: .35rem;
+        }
+
+        .admin-dashboard .card-title {
+            font-size: 1.25rem;
+            margin-bottom: .75rem;
+        }
+
+        .admin-dashboard .card-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .admin-dashboard .additional-sections h4 {
+            margin-top: 2rem;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .admin-container {
+            padding: 20px; /* Adds padding to the whole page content */
+            height: calc(100% - 120px); /* Adjust based on the actual height of your header and footer */
+            overflow-y: auto; /* Makes content scrollable */
+        }
+
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1030; /* Ensure the header is above other content */
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            z-index: 1030; /* Ensure the footer is above other content */
+        }
+
+        .dashboard-header h2 {
+            margin-left: 20px; /* Ensures "Admin Dashboard" is not touching the left edge */
+        }
+
+        .admin-container {
+            padding-top: 80px; /* Increase this value as needed */
+            /* Other styles remain unchanged */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Dashboard">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Orders">Orders</a>
+                    </li>
+                    <!-- Add more navigation items as needed -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container py-4">
+        @RenderBody()
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - Your Website | Admin Panel
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add more admin-specific scripts here -->
+</body>
+</html>

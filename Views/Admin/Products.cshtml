@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Manage Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    // Dummy data for products
+    var products = new[]
+    {
+        new { Id = 1, Name = "Lego Castle", Price = "$99.99", Category = "Toys" },
+        new { Id = 2, Name = "RC Car", Price = "$29.99", Category = "Toys" },
+        new { Id = 3, Name = "Chess Board", Price = "$19.99", Category = "Games" }
+    };
+}
+
+<div class="admin-products-content">
+    <div class="admin-container">
+        <h2>Manage Products</h2>
+        <button class="btn btn-primary mb-3" onclick="addProduct()">Add Product</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>@product.Category</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="editProduct(@product.Id)">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="removeProduct(@product.Id)">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function addProduct() {
+        alert("Add product functionality not implemented.");
+    }
+
+    function editProduct(productId) {
+        alert("Edit functionality for product ID " + productId + " not implemented.");
+    }
+
+    function removeProduct(productId) {
+        var confirmDeletion = confirm("Are you sure you want to remove this product?");
+        if (confirmDeletion) {
+            alert("Remove functionality for product ID " + productId + " not implemented.");
+        }
+    }
+</script>

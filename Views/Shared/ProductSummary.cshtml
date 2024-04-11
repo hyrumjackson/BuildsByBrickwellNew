@@ -1,0 +1,32 @@
+﻿@using BuildsByBrickwellNew.Infrastructure
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // Dummy Categories and Colors for Filters
+    var categories = new List<string> { "Fantasy", "Space", "Adventure", "City" };
+    var colors = new List<string> { "Multicolor", "Black", "Brown", "Red", "Green" };
+}
+
+@model Product
+
+<div class="col">
+    <div class="card h-100">
+        <div class="image-wrapper">
+            <img src="@Model.ImgLink" class="card-img-top" alt="@Model.Name">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@Model.ProductId" class="text-dark">@Model.Name</a>
+            </h5>
+            <p class="card-text">$@Model.Price</p>
+            <a class="btn" asp-area="" asp-controller="Home" asp-action="HyrumCart" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</a>
+        </div>
+
+        <form id="@Model.ProductId" method="post" asp-page="/Cart">
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <button type="submit" class="btn-outline-success btn-sm float-end">Add to cart actual button</button>
+        </form>
+    </div>
+</div>

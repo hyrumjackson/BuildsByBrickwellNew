@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Manage Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    // Dummy data for users
+    var users = new[]
+    {
+        new { Id = 1, Name = "Alice Johnson", Email = "alice@example.com", Role = "User" },
+        new { Id = 2, Name = "Bob Smith", Email = "bob@example.com", Role = "Admin" },
+        new { Id = 3, Name = "Charlie Davis", Email = "charlie@example.com", Role = "User" }
+    };
+}
+
+<div class="admin-users-content">
+    <div class="admin-container">
+        <h2>Manage Users</h2>
+        <button class="btn btn-primary mb-3" onclick="addUser()">Add User</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="editUser(@user.Id)">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="removeUser(@user.Id)">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function addUser() {
+        alert("Add user functionality not implemented.");
+    }
+
+    function editUser(userId) {
+        alert("Edit functionality for user ID " + userId + " not implemented.");
+    }
+
+    function removeUser(userId) {
+        var confirmDeletion = confirm("Are you sure you want to remove this user?");
+        if (confirmDeletion) {
+            alert("Remove functionality for user ID " + userId + " not implemented.");
+        }
+    }
+</script>
