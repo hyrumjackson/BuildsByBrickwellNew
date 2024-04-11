@@ -69,11 +69,6 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult HyrumCart()
-        {
-            return View();
-        }
-
         public IActionResult Checkout()
         {
             return View();
