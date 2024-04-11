@@ -18,6 +18,8 @@ namespace BuildsByBrickwellNew.Controllers
 
         public IActionResult Index()
         {
+            //var popularProducts = _context.high_rated_rec.ToList();
+
             return View();
         }
 

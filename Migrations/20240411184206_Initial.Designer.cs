@@ -4,6 +4,7 @@ using BuildsByBrickwellNew.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildsByBrickwellNew.Migrations
 {
     [DbContext(typeof(IntexProjectContext))]
-    partial class IntexProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20240411184206_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,28 +24,6 @@ namespace BuildsByBrickwellNew.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BuildsByBrickwellNew.Models.Auth_new_user_rec", b =>
-                {
-                    b.Property<int?>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProductId"));
-
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("img_link");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("product_name");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("Auth_new_user_rec", (string)null);
-                });
 
             modelBuilder.Entity("BuildsByBrickwellNew.Models.Customer", b =>
                 {
@@ -90,120 +71,6 @@ namespace BuildsByBrickwellNew.Migrations
                     b.HasIndex("AspNetUserId");
 
                     b.ToTable("Customers", (string)null);
-                });
-
-            modelBuilder.Entity("BuildsByBrickwellNew.Models.Customer2_rec", b =>
-                {
-                    b.Property<int?>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("CustomerId"));
-
-                    b.Property<int?>("Rec1")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_1");
-
-                    b.Property<int?>("Rec2")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_2");
-
-                    b.Property<int?>("Rec3")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_3");
-
-                    b.Property<int?>("Rec4")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_4");
-
-                    b.Property<int?>("Rec5")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_5");
-
-                    b.Property<int?>("Rec6")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_6");
-
-                    b.Property<int?>("Rec7")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_7");
-
-                    b.Property<int?>("Rec8")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_8");
-
-                    b.Property<int?>("Rec9")
-                        .HasColumnType("int")
-                        .HasColumnName("rec_9");
-
-                    b.HasKey("CustomerId");
-
-                    b.ToTable("Customer2_rec", (string)null);
-                });
-
-            modelBuilder.Entity("BuildsByBrickwellNew.Models.High_rated_rec", b =>
-                {
-                    b.Property<int?>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProductId"));
-
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("img_link");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
-
-                    b.Property<int?>("Qty")
-                        .HasColumnType("int")
-                        .HasColumnName("qty");
-
-                    b.Property<float?>("Rating")
-                        .HasColumnType("real")
-                        .HasColumnName("rating");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("high_rated_rec", (string)null);
-                });
-
-            modelBuilder.Entity("BuildsByBrickwellNew.Models.Item_based_rec", b =>
-                {
-                    b.Property<int?>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProductId"));
-
-                    b.Property<int?>("RecommendedProductId1")
-                        .HasColumnType("int")
-                        .HasColumnName("recommended_product_ID_1");
-
-                    b.Property<int?>("RecommendedProductId2")
-                        .HasColumnType("int")
-                        .HasColumnName("recommended_product_ID_2");
-
-                    b.Property<int?>("RecommendedProductId3")
-                        .HasColumnType("int")
-                        .HasColumnName("recommended_product_ID_3");
-
-                    b.Property<int?>("RecommendedProductId4")
-                        .HasColumnType("int")
-                        .HasColumnName("recommended_product_ID_4");
-
-                    b.Property<int?>("RecommendedProductId5")
-                        .HasColumnType("int")
-                        .HasColumnName("recommended_product_ID_5");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("item_based_rec", (string)null);
                 });
 
             modelBuilder.Entity("BuildsByBrickwellNew.Models.LineItem", b =>
