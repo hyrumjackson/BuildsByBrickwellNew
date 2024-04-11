@@ -1,17 +1,74 @@
-﻿<!DOCTYPE html>
+﻿@{
+    // Dummy user data
+    var userName = "Jaden";
+}
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Your Cart</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BuildsByBrickwellNew</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BuildsByBrickwellNew.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="bg-dark text-white p-2">
-        <span class="navbar-brand m-lg-2">Cart Summary</span>
-    </div>
-    <div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                    <img src="~/img/bw_logo.jpg" alt="BW Logo" style="height: 110px;">
+                </a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="What are you looking for?" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="d-flex align-items-center">
+                <vc:cart-summary />
+                <div class="dropdown menu-icon-container">
+                    <a class="menu-icon text-white" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="HyrumCart">HyrumCart</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminUsers">Admin Users</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminProducts">Admin Products</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ProductForm"> Product Form</a></li>
+                        @if (!string.IsNullOrEmpty(userName))
+                        {
+                            <li><a class="dropdown-item text-danger" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        }
+                        else
+                        {
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container py-4">
         @RenderBody()
-    </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 footer-custom">
+        <div class="container text-center">
+            &copy; 2024 Builds By Brickwell. All rights reserved. <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

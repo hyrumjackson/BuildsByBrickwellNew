@@ -1,45 +1,68 @@
 ﻿@page
 @model BuildsByBrickwellNew.Pages.CartModel
 @{
+    ViewData["Title"] = "Cart";
+    // Dummy data for demonstration
+    var products = new[]
+    {
+        new { Title = "Castle Adventure", Price = 99.99, Quantity = 2, ImageUrl = "/img/lego_castle.png" },
+        new { Title = "Dragon Castle", Price = 199.99, Quantity = 1, ImageUrl = "/img/lego_dragon.png" }
+    };
+    // Dummy subtotal, shipping, taxes, and total calculation for demonstration
+    var subtotal = products.Sum(p => p.Price * p.Quantity);
+    var shipping = 5.99;
+    var taxes = subtotal * 0.08; // Assuming 8% tax rate
+    var total = subtotal + shipping + taxes;
 }
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+    </ol>
+</nav>
+
+<h2>Cart</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
         @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
         {
-            <tr>
-                <td class="text-left">@l.Product.Name</td>
-                <td class="text-center">@l.Quantity</td>
-                <td class="text-right">@l.Product.Price</td>
-                <td class="text-right">@(((decimal)(l.Quantity * l.Product.Price)).ToString("C"))</td>
-                <td class="text-center">
-                    <form asp-page-handler="Remove" method="post">
-                        <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
-                        <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
-                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                    </form>
-                </td>
-            </tr>
+            <div class="product-div p-3 my-2" style="background-color: #f5f5f5; display: flex; justify-content: space-between;">
+                <div style="display: flex;">
+                    <div style="width: 100px; height: 100px; overflow: hidden; display: flex; align-items: center;">
+                        <img src="@l.Product.ImgLink" alt="@l.Product.Name" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div style="margin-left: 20px;">
+                        <h5>@l.Product.Name</h5>
+                        <p>In Stock</p>
+                        <p>$@l.Product.Price/ea</p>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <p class="total-price">Total: @(((decimal)(l.Quantity * l.Product.Price)).ToString("C"))</p>
+                    <div>Qty: <input type="number" value="@l.Quantity" class="quantity" style="width: 60px;" min="1"></div>
+                    <div style="margin-top: 10px;">
+                        <form asp-page-handler="Remove" method="post">
+                            <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
+                            <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
+                            <button type="submit" class="remove">Remove</button>
+                        </form>
+                        @* | <a href="#" class="save">Save</a> *@
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
-        </tr>
-    </tfoot>
-</table>
-
-<div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+    </div>
+    <div class="col-md-4">
+        <div class="summary-div p-3" style="border: 1px solid #ddd;">
+            <p id="subtotal">Subtotal @Model.Cart?.CalculateTotal().ToString("c")</p>
+            <p>Shipping: $5.99</p>
+            <p>Taxes: $3.45</p>
+            <hr />
+            <p><strong>Total: $62.42</strong></p>
+            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="Checkout" style="background-color: #00c3fc; color: #ffffff;">Continue to Checkout</a>
+        </div>
+    </div>
 </div>
