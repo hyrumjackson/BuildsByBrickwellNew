@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication();
+/*builder.Services.AddAuthentication();*/
 
 var connectionString = builder.Configuration.GetConnectionString("IntexConnection");
 var dbPassword = builder.Configuration["DbPassword"];
@@ -92,11 +92,16 @@ app.UseAuthorization();
 app.MapControllerRoute("pagenumandtype", "{productType}/Page{pageNum}", new { Controller = "Home", Action = "Products" });
 /*app.MapControllerRoute("pagenumandcolor", "{productColor}/Page{pageNum}", new { Controller = "Home", Action = "Products" });*/
 app.MapControllerRoute(
+    name: "areaRoute",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
+app.MapControllerRoute(
     name: "product",
     pattern: "Products/{productType?}/{productColor?}/Page{pageNum}",
     defaults: new { Controller = "Home", Action = "Products", pageNum = 1 }
 );
 app.MapControllerRoute("pagination", "Products/Page{pageNum}", new { Controller = "Home", Action = "Products", pageNum = 1 });
+
 
 app.MapDefaultControllerRoute();
 
