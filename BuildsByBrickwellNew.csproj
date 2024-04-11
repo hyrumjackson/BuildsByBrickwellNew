@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
     <None Include="Properties\PublishProfiles\BuildsByBrickwellNew - Web Deploy.pubxml.user" />
     <None Include="Properties\serviceDependencies.local.json.user" />
     <None Include="Views\Home\Index.cshtml" />

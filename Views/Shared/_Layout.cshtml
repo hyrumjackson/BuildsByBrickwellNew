@@ -24,11 +24,11 @@
                     <img src="~/img/bw_logo.jpg" alt="BW Logo" style="height: 110px;">
                 </a>
                 <div class="navbar-nav mx-auto">
-                    @if (ViewContext.RouteData.Values["Action"].ToString() == "Login")
+                    @if (ViewContext.RouteData.Values["Action"]?.ToString() == "Login")
                     {
                         <h1 class="welcome-text">Login</h1>
                     }
-                    else if (ViewContext.RouteData.Values["Action"].ToString() != "Index")
+                    else if (ViewContext.RouteData.Values["Action"]?.ToString() != "Index")
                     {
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="What are you looking for?" aria-label="Search">
@@ -40,7 +40,7 @@
                         <h1 class="welcome-text">Welcome, @userName!</h1>
                     }
                 </div>
-                @if (ViewContext.RouteData.Values["Action"].ToString() != "Login")
+                @if (ViewContext.RouteData.Values["Action"]?.ToString() != "Login")
                 {
                     <div class="d-flex align-items-center">
                         <vc:cart-summary />
@@ -64,7 +64,7 @@
                                 }
                                 else
                                 {
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
                                 }
                             </ul>
                         </div>
