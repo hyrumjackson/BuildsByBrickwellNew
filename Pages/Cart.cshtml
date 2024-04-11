@@ -1,5 +1,7 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @model BuildsByBrickwellNew.Pages.CartModel
+@attribute [Authorize]
 @{
     ViewData["Title"] = "Cart";
     // Dummy data for demonstration
