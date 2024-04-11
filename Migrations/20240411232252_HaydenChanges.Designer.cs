@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildsByBrickwellNew.Migrations
 {
     [DbContext(typeof(IntexProjectContext))]
-    [Migration("20240411231139_RecommendationTables")]
-    partial class RecommendationTables
+    [Migration("20240411232252_HaydenChanges")]
+    partial class HaydenChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,10 +60,6 @@ namespace BuildsByBrickwellNew.Migrations
                         .HasColumnType("int")
                         .HasColumnName("age");
 
-                    b.Property<string>("AspNetUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("birth_date");
@@ -89,8 +85,6 @@ namespace BuildsByBrickwellNew.Migrations
                         .HasColumnName("last_name");
 
                     b.HasKey("CustomerId");
-
-                    b.HasIndex("AspNetUserId");
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -555,17 +549,6 @@ namespace BuildsByBrickwellNew.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("BuildsByBrickwellNew.Models.Customer", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("AspNetUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
