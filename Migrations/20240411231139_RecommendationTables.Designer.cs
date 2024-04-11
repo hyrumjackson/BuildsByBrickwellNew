@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildsByBrickwellNew.Migrations
 {
     [DbContext(typeof(IntexProjectContext))]
-    [Migration("20240411225824_RecommendationTables")]
+    [Migration("20240411231139_RecommendationTables")]
     partial class RecommendationTables
     {
         /// <inheritdoc />
