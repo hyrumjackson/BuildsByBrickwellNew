@@ -28,9 +28,7 @@
             <hr />
             <div>
                 <p>
-                    <a asp-page="./ExternalLogin" asp-route-provider="Google" class="btn btn-primary" title="Log in using your Google account">
-                        Sign in with Google
-                    </a>
+                    <a asp-area="Identity" asp-page="/Account/ExternalLogin" asp-route-provider="Google" class="btn btn-primary">Login with Google</a>
                 </p>
             </div>
         </section>
