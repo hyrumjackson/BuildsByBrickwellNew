@@ -1,5 +1,7 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @model BuildsByBrickwellNew.Pages.CartModel
+@attribute [Authorize]
 @{
     ViewData["Title"] = "Cart";
     // Dummy data for demonstration
@@ -61,8 +63,18 @@
             <p>Shipping: $5.99</p>
             <p>Taxes: $3.45</p>
             <hr />
-            <p><strong>Total: $62.42</strong></p>
+            <p><strong>
+                    <td colspan="3" class="text-right">Total:</td>
+                    <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+            </strong></p>
             <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="Checkout" style="background-color: #00c3fc; color: #ffffff;">Continue to Checkout</a>
         </div>
     </div>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+        </tr>
+    </tfoot>
 </div>
+    

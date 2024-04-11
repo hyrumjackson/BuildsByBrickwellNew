@@ -1,10 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Checkout";
-    // Dummy customer and payment data for demonstration
-    var customerName = "John Doe";
-    var shippingAddress = "123 Main St, Anytown, USA";
-    var billingAddress = "456 Elm St, Anytown, USA";
-    var paymentMethod = "Visa 0001";
 }
 
 <nav aria-label="breadcrumb">
@@ -15,36 +10,107 @@
     </ol>
 </nav>
 
-<h2>Information</h2>
+<h2>Checkout</h2>
 <hr />
 
-<div class="row">
-    <div class="col-md-8">
-        <div class="p-3 mb-3" style="background-color: #f5f5f5;">
-            <div class="d-flex justify-content-between">
-                <h5>Shipping Address:</h5>
-                <button class="btn btn-light btn-sm">Change</button>
-            </div>
-            <strong>@customerName</strong>
-            <p>@shippingAddress</p>
-            <hr />
-            <div class="d-flex justify-content-between">
-                <h5>Payment Method:</h5>
-                <button class="btn btn-light btn-sm">Change</button>
-            </div>
-            <strong>Paying with @paymentMethod</strong>
-            <p>@billingAddress</p>
-        </div>
+@{
+    var currentDate = DateTime.Now;
+    var currentDayOfWeekNumber = (int)currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek; // Adjust for Sunday = 7
+    var currentHour = currentDate.Hour;
+}
+
+<form asp-action="ProcessPayment" method="post">
+    <div class="form-group">
+        <label for="customerID">Customer ID</label>
+        <input type="text" class="form-control" id="customerID" name="customer_ID" value="0" readonly>
     </div>
 
-    <div class="col-md-4">
-        <div class="summary-div p-3" style="border: 1px solid #ddd;">
-            <p>Subtotal (3 items): $399.97</p>
-            <p>Shipping: $5.99</p>
-            <p>Taxes: $3.45</p>
-            <hr />
-            <p><strong>Total: $62.42</strong></p>
-            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="OrderStatus" style="background-color: #00c3fc; color: #ffffff;">Place Your Order</a>
-        </div>
+    <div class="form-group">
+        <label for="transactionDate">Date</label>
+        <input type="date" class="form-control" id="transactionDate" name="date" value="@currentDate.ToString("yyyy-MM-dd")" readonly>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="dayOfWeek">Day of the Week</label>
+        <input type="number" class="form-control" id="dayOfWeek" name="day_of_week" value="@currentDayOfWeekNumber" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="transactionTime">Time</label>
+        <input type="number" class="form-control" id="transactionTime" name="time" value="@currentHour" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="entryMode">Entry Mode</label>
+        <select class="form-control" id="entryMode" name="entry_mode">
+            <option selected disabled>Select Entry Mode</option>
+            <option value="1">PIN</option>
+            <option value="2">Tap</option>
+            <option value="3">CVC</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="amount">Amount</label>
+        <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter Amount" step="1">
+    </div>
+
+    <div class="form-group">
+        <label for="typeOfTransaction">Type of Transaction</label>
+        <select class="form-control" id="typeOfTransaction" name="type_of_transaction">
+            <option selected disabled>Select Transaction Type</option>
+            <option value="1">Online</option>
+            <option value="2">ATM</option>
+            <option value="3">POS</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="countryOfTransaction">Country of Transaction</label>
+        <select class="form-control" id="countryOfTransaction" name="country_of_transaction">
+            <option selected disabled>Select Country</option>
+            <option value="1">USA</option>
+            <option value="2">United Kingdom</option>
+            <option value="3">China</option>
+            <option value="4">India</option>
+            <option value="5">Russia</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="shippingCountry">Shipping Country</label>
+        <select class="form-control" id="shippingCountry" name="shipping_address">
+            <option selected disabled>Select Country</option>
+            <option value="1">USA</option>
+            <option value="2">United Kingdom</option>
+            <option value="3">China</option>
+            <option value="4">India</option>
+            <option value="5">Russia</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="bank">Bank</label>
+        <select class="form-control" id="bank" name="bank">
+            <option selected disabled>Select Bank</option>
+            <option value="1">RBS</option>
+            <option value="2">Barclays</option>
+            <option value="3">Halifax</option>
+            <option value="4">Lloyds</option>
+            <option value="5">Metro</option>
+            <option value="6">Monzo</option>
+            <option value="7">HSBC</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="typeOfCard">Type of Card</label>
+        <select class="form-control" id="typeOfCard" name="type_of_card">
+            <option selected disabled>Select Card Type</option>
+            <option value="1">MasterCard</option>
+            <option value="2">Visa</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Place Your Order</button>
+</form>
