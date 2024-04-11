@@ -1,0 +1,21 @@
+﻿@page
+@model UserInfoModel
+
+<h2>User Information</h2>
+
+<p>Your user is @Model.Email</p>
+
+@if (Model.Roles != null && Model.Roles.Count > 0)
+{
+    <p>You are a:</p>
+    <ul>
+        @foreach (var role in Model.Roles)
+        {
+            <li>@role</li>
+        }
+    </ul>
+}
+else
+{
+    <p>You are not assigned to any roles.</p>
+}
