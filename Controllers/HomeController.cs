@@ -109,76 +109,76 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult AdminProducts()
-        {
-            var products = _context.Products
-                .ToList();
+        //public IActionResult AdminProducts()
+        //{
+        //    var products = _context.Products
+        //        .ToList();
 
-            return View(products);
-        }
+        //    return View(products);
+        //}
 
-        [HttpGet]
-        public IActionResult ProductForm()
-        {
-            return View("ProductForm", new Product());
-        }
+        //[HttpGet]
+        //public IActionResult ProductForm()
+        //{
+        //    return View("ProductForm", new Product());
+        //}
 
-        [HttpPost]
-        public IActionResult ProductForm(Product response)
-        {
-            if (ModelState.IsValid)
-            {
-                response.Year = 0;
-                response.NumParts = 0;
-                response.Price = 0;
-                response.ImgLink = "";
-                _context.Products.Add(response); // add a record to the database
-                _context.SaveChanges();
-                return View("Confirmation", response);
-            }
-            else
-            {
-                return View(response);
-            }
-        }
+        //[HttpPost]
+        //public IActionResult ProductForm(Product response)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        response.Year = 0;
+        //        response.NumParts = 0;
+        //        response.Price = 0;
+        //        response.ImgLink = "";
+        //        _context.Products.Add(response); // add a record to the database
+        //        _context.SaveChanges();
+        //        return View("Confirmation", response);
+        //    }
+        //    else
+        //    {
+        //        return View(response);
+        //    }
+        //}
 
-        // HTTP GET action method to display the movie edit form
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var recordtoEdit = _context.Products
-                .Single(x => x.ProductId == id);
+        //// HTTP GET action method to display the movie edit form
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    var recordtoEdit = _context.Products
+        //        .Single(x => x.ProductId == id);
 
-            return View("ProductForm", recordtoEdit);
-        }
+        //    return View("ProductForm", recordtoEdit);
+        //}
 
-        // HTTP POST action method to handle movie edit submission
-        [HttpPost]
-        public IActionResult Edit(Product updatedInfo)
-        {
-            _context.Update(updatedInfo);
-            _context.SaveChanges();
-            return RedirectToAction("AdminProducts");
-        }
+        //// HTTP POST action method to handle movie edit submission
+        //[HttpPost]
+        //public IActionResult Edit(Product updatedInfo)
+        //{
+        //    _context.Update(updatedInfo);
+        //    _context.SaveChanges();
+        //    return RedirectToAction("AdminProducts");
+        //}
 
-        // HTTP GET action method to display the movie delete confirmation page
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var recordtoDelete = _context.Products
-                .Single(x => x.ProductId == id);
+        //// HTTP GET action method to display the movie delete confirmation page
+        //[HttpGet]
+        //public IActionResult Delete(int id)
+        //{
+        //    var recordtoDelete = _context.Products
+        //        .Single(x => x.ProductId == id);
 
-            return View(recordtoDelete);
-        }
+        //    return View(recordtoDelete);
+        //}
 
-        // HTTP POST action method to handle movie deletion
-        [HttpPost]
-        public IActionResult Delete(Product updatedInfo)
-        {
-            _context.Products.Remove(updatedInfo);
-            _context.SaveChanges();
-            return RedirectToAction("AdminProducts");
-        }
+        //// HTTP POST action method to handle movie deletion
+        //[HttpPost]
+        //public IActionResult Delete(Product updatedInfo)
+        //{
+        //    _context.Products.Remove(updatedInfo);
+        //    _context.SaveChanges();
+        //    return RedirectToAction("AdminProducts");
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

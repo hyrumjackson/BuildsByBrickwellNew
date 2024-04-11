@@ -1,0 +1,39 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+<h2>Manage Users</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">User ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @string.Join(", ", await UserManager.GetRolesAsync(user))
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" asp-page="/Admin/EditUser" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-page="/Admin/DeleteUser" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a class="btn btn-primary" asp-page="/Admin/CreateUser">Add New User</a>

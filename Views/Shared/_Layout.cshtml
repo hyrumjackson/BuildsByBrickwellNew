@@ -1,6 +1,5 @@
 ﻿@{
-    // Dummy user data
-    var userName = "Jaden";
+    var userName = User.Identity.IsAuthenticated ? User.Identity.Name : null;
 }
 
 <!DOCTYPE html>
@@ -36,7 +35,7 @@
                             <button class="btn btn-outline-light" type="submit">Search</button>
                         </form>
                     }
-                    else
+                    else if (User.Identity.IsAuthenticated)
                     {
                         <h1 class="welcome-text">Welcome, @userName!</h1>
                     }
@@ -53,12 +52,15 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminUsers">Admin Users</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminProducts">Admin Products</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ProductForm"> Product Form</a></li>
-                                @if (!string.IsNullOrEmpty(userName))
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Admin Users</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Admin Products</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ProductForm"> Product Form</a></li>
+                                @if (User.Identity.IsAuthenticated)
                                 {
-                                    <li><a class="dropdown-item text-danger" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                    <form asp-controller="Account" asp-action="Logout" method="post">
+                                        <button type="submit" class="btn btn-danger">Logout</button>
+                                    </form>
+
                                 }
                                 else
                                 {
