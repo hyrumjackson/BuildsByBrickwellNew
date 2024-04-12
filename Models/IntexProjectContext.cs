@@ -110,7 +110,7 @@ public partial class IntexProjectContext : IdentityDbContext
         modelBuilder.Entity<Customer2_rec>(entity =>
         {
             entity.ToTable("Customer2_rec");
-            entity.Property(e => e.CustomerId).HasColumnName("product_id");
+            entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.Rec1).HasColumnName("rec_1");
             entity.Property(e => e.Rec2).HasColumnName("rec_2");
             entity.Property(e => e.Rec3).HasColumnName("rec_3");

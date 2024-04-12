@@ -7,9 +7,9 @@ namespace BuildsByBrickwellNew.Models;
 public class High_rated_rec
 {
     [Key]
-    public int? ProductId { get; set; }
+    public byte? ProductId { get; set; }
 
-    public float? Rating { get; set; }
+    public double? Rating { get; set; }
 
     public int? Qty { get; set; }
 
