@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
@@ -89,7 +90,7 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult Products(int pageNum, string? productType, string? productColor, int pageSize = 5)
+        public IActionResult Products(int pageNum, string? productType, string? productColor, int pageSize)
         {
             // Ensure that the page size is within a valid range
             pageSize = Math.Clamp(pageSize, 5, 20);
@@ -130,8 +131,11 @@ namespace BuildsByBrickwellNew.Controllers
         public IActionResult Orders()
         {
 
-            var orders = _context.Orders.ToList();
-            return View(orders);
+            var records = _context.Orders
+                .OrderByDescending(o => o.Date)
+                .Take(20)
+                .ToList();
+            return View(records);
         }
 
         public IActionResult About()
@@ -139,22 +143,28 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
         [HttpGet]
-
-        public IActionResult Checkout()
+        public IActionResult Checkout(string total)
         {
-            return View(new Order());
+            // Parse the currency value
+            if (decimal.TryParse(total, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal parsedTotal))
+            {
+                var order = new Order
+                {
+                    Amount = (double?)parsedTotal
+                };
+                return View(order);
+            }
+
+            return View(new Order()); // fallback if parsing fails
         }
         [HttpPost]
         public IActionResult Checkout(Order response)
-        {if (ModelState.IsValid)
+        {
+            if (ModelState.IsValid)
             {
-                response.CustomerId = 0;
-                response.Date = "";
-                response.DayOfWeek = "";
-                response.Time = 0;
                 _context.Orders.Add(response);
                 _context.SaveChanges();
-                return View("ConfirmationCheckout", response);
+                return RedirectToAction("ReviewOrders", "ONNX");
             }
             return View(response);
         }

@@ -38,7 +38,7 @@
                     }
                     else if (User.Identity.IsAuthenticated)
                     {
-                        <h1 class="welcome-text">Welcome, @userName!</h1>
+                        <h3>Welcome, @userName!</h3>
                     }
                 </div>
                 @if (ViewContext.RouteData.Values["Action"]?.ToString() != "Login")
@@ -53,16 +53,19 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Admin Users</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Admin Products</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ProductForm"> Product Form</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders"> Orders</a></li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Edit Users</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Edit Products</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders">View Orders</a></li>
+                                }
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <form asp-controller="Account" asp-action="Logout" method="post">
-                                        <button type="submit" class="btn btn-danger">Logout</button>
+                                        <button type="submit" class="dropdown-item" style="color: red;">
+                                            Logout
+                                        </button>
                                     </form>
-
                                 }
                                 else
                                 {
