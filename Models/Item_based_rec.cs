@@ -7,15 +7,15 @@ namespace BuildsByBrickwellNew.Models;
 public class Item_based_rec
 {
     [Key]
-    public int? ProductId { get; set; }
+    public byte? ProductId { get; set; }
 
-    public int? RecommendedProductId1 { get; set; }
+    public byte? RecommendedProductId1 { get; set; }
 
-    public int? RecommendedProductId2 { get; set; }
+    public byte? RecommendedProductId2 { get; set; }
 
-    public int? RecommendedProductId3 { get; set; }
+    public byte? RecommendedProductId3 { get; set; }
 
-    public int? RecommendedProductId4 { get; set; }
+    public byte? RecommendedProductId4 { get; set; }
 
-    public int? RecommendedProductId5 { get; set; }
+    public byte? RecommendedProductId5 { get; set; }
 }

@@ -1,30 +1,17 @@
 ﻿@using BuildsByBrickwellNew.Infrastructure
-@{
-    ViewData["Title"] = "Details";
+@model BuildsByBrickwellNew.Models.Product
 
-    // Updated dummy product data with Rating and Key Features
-    dynamic product = new
-    {
-        Name = "Space Explorer Set",
-        Category = "Space",
-        Color = "Black and White",
-        Description = "Embark on interstellar adventures with the Space Explorer Set. This set features a detailed spacecraft, astronaut minifigures, and a lunar landscape for endless imaginative play.",
-        Price = "149.99",
-        ImageUrl = "/img/space_lego.jpeg",
-        Rating = 4,
-        KeyFeatures = new List<string> { "Includes 4 astronaut minifigures", "Detachable lunar lander", "Articulated robotic arm" }
-    };
+@{
+    ViewData["Title"] = "Product Details";
 }
 
-@model Product
-
 <div class="container py-5">
-    <!-- Breadcrumb-like navigation -->
+    <!-- Breadcrumb navigation -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-            <li class="breadcrumb-item"><a class="breadcrumb-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@product.Name</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Products">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
         </ol>
     </nav>
 
@@ -35,44 +22,55 @@
         </div>
 
         <div class="col-md-6">
-            <!-- Product Title & Rating -->
+            <!-- Product Title and Rating -->
             <h1>@Model.Name</h1>
             <div class="rating">
                 @for (int i = 0; i < 5; i++)
                 {
-                    <span class="fa fa-star @(i < product.Rating ? "checked" : "")"></span> <!-- Dynamic class application for stars -->
+                    <span class="fa fa-star @(i < 4 ? "checked" : "")"></span>
                 }
             </div>
             <!-- Product Price & Add to Cart Button -->
             <h3 class="my-4">$@Model.Price</h3>
-            <a>
-                <form id="@Model.ProductId" method="post" asp-page="/Cart">
-                    <input type="hidden" asp-for="ProductId" />
-                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                    <button type="submit" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</button>
-                </form>
-            </a>
+            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                <button type="submit" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</button>
+            </form>
             <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Products">Back to List</a>
 
             <!-- Product Description -->
             <div class="mt-4">
-                <!-- Added margin-top for spacing -->
                 <h3>Description</h3>
                 <p>@Model.Description</p>
             </div>
+        </div>
+    </div>
 
-            <!-- Key Features -->
-            @* Just FYI, key features isn't its own column and this won't work' *@
-            <div class="mt-4">
-                <!-- Added margin-top for spacing -->
-                <h3>Key Features</h3>
-                <ul>
-                    @foreach (var feature in product.KeyFeatures)
-                    {
-                        <li>@feature</li>
-                    }
-                </ul>
-            </div>
+    <!-- Recommended Products Section -->
+    <div class="recommended-products mt-5">
+        <h2>Recommended Products</h2>
+        <div class="row">
+            @if (ViewBag.RecommendedProducts is IEnumerable<BuildsByBrickwellNew.Models.Product> recommendedProducts)
+            {
+                foreach (var product in recommendedProducts)
+                {
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img src="@product.ImgLink" class="card-img-top" alt="@product.Name">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">$@product.Price</p>
+                                <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@product.ProductId" class="btn btn-primary">See Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No recommended products to display.</p>
+            }
         </div>
     </div>
 </div>

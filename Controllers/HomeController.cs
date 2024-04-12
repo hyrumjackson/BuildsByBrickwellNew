@@ -138,13 +138,47 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var productDetails = _context.Products
-                .Single(x => x.ProductId == id);
+            // Fetch the main product details
+            var productDetails = await _context.Products
+                                               .SingleOrDefaultAsync(x => x.ProductId == id);
+
+            if (productDetails == null)
+            {
+                return NotFound(); // If no product is found, return a NotFound result.
+            }
+
+            // Fetch recommended product IDs from the item-based recommendations table
+            var itemRecs = await _context.Item_Based_Recs
+                                         .FirstOrDefaultAsync(x => x.ProductId == id);
+
+            List<Product> recommendedProducts = new List<Product>();
+            if (itemRecs != null)
+            {
+                // List to hold potential recommended product IDs
+                List<int> recProductIds = new List<int>();
+
+                // Adding recommendations to the list if they exist
+                if (itemRecs.RecommendedProductId1.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId1.Value);
+                if (itemRecs.RecommendedProductId2.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId2.Value);
+                if (itemRecs.RecommendedProductId3.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId3.Value);
+
+                // Fetch the recommended products from the database
+                recommendedProducts = await _context.Products
+                                                    .Where(p => recProductIds.Contains(p.ProductId))
+                                                    .ToListAsync();
+            }
+
+            // Use a ViewModel or ViewBag/ViewData to pass both the product details and the recommended products to the view
+            ViewBag.RecommendedProducts = recommendedProducts;
 
             return View(productDetails);
         }
+
 
         public IActionResult Testing()
         {
