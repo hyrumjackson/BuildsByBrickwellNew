@@ -15,100 +15,100 @@
 
 @{
     var currentDate = DateTime.Now;
-    var currentDayOfWeekNumber = (int)currentDate.DayOfWeek == 0 ? 7 : (int)currentDate.DayOfWeek; // Adjust for Sunday = 7
+    var currentDayOfWeekNumber = (int)currentDate.DayOfWeek == 0 ? "Sunday" : currentDate.DayOfWeek.ToString();
     var currentHour = currentDate.Hour;
 }
 
-<form asp-action="ProcessPayment" method="post">
+<form asp-controller="Admin" asp-action="PredictOrder" method="post">
     <div class="form-group">
         <label for="customerID">Customer ID</label>
-        <input type="text" class="form-control" id="customerID" name="customer_ID" value="0" readonly>
+        <input type="text" class="form-control" id="customerID" name="CustomerId" value="0" readonly>
     </div>
 
     <div class="form-group">
         <label for="transactionDate">Date</label>
-        <input type="date" class="form-control" id="transactionDate" name="date" value="@currentDate.ToString("yyyy-MM-dd")" readonly>
+        <input type="date" class="form-control" id="transactionDate" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" readonly>
     </div>
 
     <div class="form-group">
         <label for="dayOfWeek">Day of the Week</label>
-        <input type="number" class="form-control" id="dayOfWeek" name="day_of_week" value="@currentDayOfWeekNumber" readonly>
+        <input type="text" class="form-control" id="dayOfWeek" name="DayOfWeek" value="@currentDayOfWeekNumber" readonly>
     </div>
 
     <div class="form-group">
         <label for="transactionTime">Time</label>
-        <input type="number" class="form-control" id="transactionTime" name="time" value="@currentHour" readonly>
+        <input type="number" class="form-control" id="transactionTime" name="Time" value="@currentHour" readonly>
     </div>
 
     <div class="form-group">
         <label for="entryMode">Entry Mode</label>
-        <select class="form-control" id="entryMode" name="entry_mode">
+        <select class="form-control" id="entryMode" name="EntryMode">
             <option selected disabled>Select Entry Mode</option>
-            <option value="1">PIN</option>
-            <option value="2">Tap</option>
-            <option value="3">CVC</option>
+            <option value="PIN">PIN</option>
+            <option value="Tap">Tap</option>
+            <option value="CVC">CVC</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="amount">Amount</label>
-        <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter Amount" step="1">
+        <input type="number" class="form-control" id="amount" name="Amount" placeholder="Enter Amount" step="0.01">
     </div>
 
     <div class="form-group">
         <label for="typeOfTransaction">Type of Transaction</label>
-        <select class="form-control" id="typeOfTransaction" name="type_of_transaction">
+        <select class="form-control" id="typeOfTransaction" name="TypeOfTransaction">
             <option selected disabled>Select Transaction Type</option>
-            <option value="1">Online</option>
-            <option value="2">ATM</option>
-            <option value="3">POS</option>
+            <option value="Online">Online</option>
+            <option value="ATM">ATM</option>
+            <option value="POS">POS</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="countryOfTransaction">Country of Transaction</label>
-        <select class="form-control" id="countryOfTransaction" name="country_of_transaction">
+        <select class="form-control" id="countryOfTransaction" name="CountryOfTransaction">
             <option selected disabled>Select Country</option>
-            <option value="1">USA</option>
-            <option value="2">United Kingdom</option>
-            <option value="3">China</option>
-            <option value="4">India</option>
-            <option value="5">Russia</option>
+            <option value="USA">USA</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="China">China</option>
+            <option value="India">India</option>
+            <option value="Russia">Russia</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="shippingCountry">Shipping Country</label>
-        <select class="form-control" id="shippingCountry" name="shipping_address">
+        <select class="form-control" id="shippingCountry" name="ShippingAddress">
             <option selected disabled>Select Country</option>
-            <option value="1">USA</option>
-            <option value="2">United Kingdom</option>
-            <option value="3">China</option>
-            <option value="4">India</option>
-            <option value="5">Russia</option>
+            <option value="USA">USA</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="China">China</option>
+            <option value="India">India</option>
+            <option value="Russia">Russia</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="bank">Bank</label>
-        <select class="form-control" id="bank" name="bank">
+        <select class="form-control" id="bank" name="Bank">
             <option selected disabled>Select Bank</option>
-            <option value="1">RBS</option>
-            <option value="2">Barclays</option>
-            <option value="3">Halifax</option>
-            <option value="4">Lloyds</option>
-            <option value="5">Metro</option>
-            <option value="6">Monzo</option>
-            <option value="7">HSBC</option>
+            <option value="RBS">RBS</option>
+            <option value="Barclays">Barclays</option>
+            <option value="Halifax">Halifax</option>
+            <option value="Lloyds">Lloyds</option>
+            <option value="Metro">Metro</option>
+            <option value="Monzo">Monzo</option>
+            <option value="HSBC">HSBC</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="typeOfCard">Type of Card</label>
-        <select class="form-control" id="typeOfCard" name="type_of_card">
+        <select class="form-control" id="typeOfCard" name="TypeOfCard">
             <option selected disabled>Select Card Type</option>
-            <option value="1">MasterCard</option>
-            <option value="2">Visa</option>
+            <option value="MasterCard">MasterCard</option>
+            <option value="Visa">Visa</option>
         </select>
     </div>
 

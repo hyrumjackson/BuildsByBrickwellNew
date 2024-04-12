@@ -4,17 +4,7 @@
 @attribute [Authorize]
 @{
     ViewData["Title"] = "Cart";
-    // Dummy data for demonstration
-    var products = new[]
-    {
-        new { Title = "Castle Adventure", Price = 99.99, Quantity = 2, ImageUrl = "/img/lego_castle.png" },
-        new { Title = "Dragon Castle", Price = 199.99, Quantity = 1, ImageUrl = "/img/lego_dragon.png" }
-    };
-    // Dummy subtotal, shipping, taxes, and total calculation for demonstration
-    var subtotal = products.Sum(p => p.Price * p.Quantity);
-    var shipping = 5.99;
-    var taxes = subtotal * 0.08; // Assuming 8% tax rate
-    var total = subtotal + shipping + taxes;
+
 }
 
 <nav aria-label="breadcrumb">
@@ -44,7 +34,9 @@
                 </div>
                 <div style="text-align: right;">
                     <p class="total-price">Total: @(((decimal)(l.Quantity * l.Product.Price)).ToString("C"))</p>
-                    <div>Qty: <input type="number" value="@l.Quantity" class="quantity" style="width: 60px;" min="1"></div>
+                    <div>
+                        Qty: <span class="quantity" style="width: 60px;">@l.Quantity</span>
+                    </div>
                     <div style="margin-top: 10px;">
                         <form asp-page-handler="Remove" method="post">
                             <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
@@ -60,21 +52,13 @@
     <div class="col-md-4">
         <div class="summary-div p-3" style="border: 1px solid #ddd;">
             <p id="subtotal">Subtotal @Model.Cart?.CalculateTotal().ToString("c")</p>
-            <p>Shipping: $5.99</p>
-            <p>Taxes: $3.45</p>
             <hr />
             <p><strong>
-                    <td colspan="3" class="text-right">Total:</td>
-                    <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+                <td colspan="3" class="text-right">Total:</td>
+                <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
             </strong></p>
             <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="Checkout" style="background-color: #00c3fc; color: #ffffff;">Continue to Checkout</a>
         </div>
     </div>
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
-        </tr>
-    </tfoot>
 </div>
     
