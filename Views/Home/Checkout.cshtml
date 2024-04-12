@@ -1,7 +1,7 @@
-﻿@{
+﻿@model BuildsByBrickwellNew.Models.Order
+@{
     ViewData["Title"] = "Checkout";
 }
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
@@ -40,35 +40,38 @@
         <input type="number" class="form-control" id="transactionTime" name="Time" value="@currentHour" readonly>
     </div>
 
+    <!-- Dropdown for EntryMode -->
     <div class="form-group">
-        <label for="entryMode">Entry Mode</label>
-        <select class="form-control" id="entryMode" name="EntryMode">
-            <option selected disabled>Select Entry Mode</option>
+        <label asp-for="EntryMode">Entry Mode</label>
+        <select asp-for="EntryMode" class="form-control">
+            <option value="">Select Entry Mode</option>
             <option value="PIN">PIN</option>
             <option value="Tap">Tap</option>
             <option value="CVC">CVC</option>
         </select>
     </div>
 
+    <!-- Input field for Amount -->
     <div class="form-group">
-        <label for="amount">Amount</label>
-        <input type="number" class="form-control" id="amount" name="Amount" placeholder="Enter Amount" step="0.01">
+        <label asp-for="Amount">Amount</label>
+        <input asp-for="Amount" class="form-control" step="0.01" placeholder="Enter Amount">
     </div>
-
+    <!-- Dropdown for TypeOfTransaction -->
     <div class="form-group">
-        <label for="typeOfTransaction">Type of Transaction</label>
-        <select class="form-control" id="typeOfTransaction" name="TypeOfTransaction">
-            <option selected disabled>Select Transaction Type</option>
+        <label asp-for="TypeOfTransaction">Type of Transaction</label>
+        <select asp-for="TypeOfTransaction" class="form-control">
+            <option value="">Select Transaction Type</option>
             <option value="Online">Online</option>
             <option value="ATM">ATM</option>
             <option value="POS">POS</option>
         </select>
     </div>
 
+    <!-- Dropdown for CountryOfTransaction -->
     <div class="form-group">
-        <label for="countryOfTransaction">Country of Transaction</label>
-        <select class="form-control" id="countryOfTransaction" name="CountryOfTransaction">
-            <option selected disabled>Select Country</option>
+        <label asp-for="CountryOfTransaction">Country of Transaction</label>
+        <select asp-for="CountryOfTransaction" class="form-control">
+            <option value="">Select Country</option>
             <option value="USA">USA</option>
             <option value="United Kingdom">United Kingdom</option>
             <option value="China">China</option>
@@ -77,10 +80,11 @@
         </select>
     </div>
 
+    <!-- Dropdown for ShippingAddress -->
     <div class="form-group">
-        <label for="shippingCountry">Shipping Country</label>
-        <select class="form-control" id="shippingCountry" name="ShippingAddress">
-            <option selected disabled>Select Country</option>
+        <label asp-for="ShippingAddress">Shipping Country</label>
+        <select asp-for="ShippingAddress" class="form-control">
+            <option value="">Select Country</option>
             <option value="USA">USA</option>
             <option value="United Kingdom">United Kingdom</option>
             <option value="China">China</option>
@@ -89,10 +93,11 @@
         </select>
     </div>
 
+    <!-- Dropdown for Bank -->
     <div class="form-group">
-        <label for="bank">Bank</label>
-        <select class="form-control" id="bank" name="Bank">
-            <option selected disabled>Select Bank</option>
+        <label asp-for="Bank">Bank</label>
+        <select asp-for="Bank" class="form-control">
+            <option value="">Select Bank</option>
             <option value="RBS">RBS</option>
             <option value="Barclays">Barclays</option>
             <option value="Halifax">Halifax</option>
@@ -103,14 +108,16 @@
         </select>
     </div>
 
+    <!-- Dropdown for TypeOfCard -->
     <div class="form-group">
-        <label for="typeOfCard">Type of Card</label>
-        <select class="form-control" id="typeOfCard" name="TypeOfCard">
-            <option selected disabled>Select Card Type</option>
+        <label asp-for="TypeOfCard">Type of Card</label>
+        <select asp-for="TypeOfCard" class="form-control">
+            <option value="">Select Card Type</option>
             <option value="MasterCard">MasterCard</option>
             <option value="Visa">Visa</option>
         </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Place Your Order</button>
+    <div asp-validation-summary="All"></div>
 </form>
