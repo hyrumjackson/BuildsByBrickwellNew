@@ -29,16 +29,13 @@
                     {
                         <h1 class="welcome-text">Login</h1>
                     }
-                    else if (ViewContext.RouteData.Values["Action"]?.ToString() != "Index")
-                    {
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="What are you looking for?" aria-label="Search">
-                            <button class="btn btn-outline-light" type="submit">Search</button>
-                        </form>
-                    }
                     else if (User.Identity.IsAuthenticated)
                     {
                         <h3>Welcome, @userName!</h3>
+                    }
+                    else
+                    {
+                        <h1>Builds By Brickwell</h1>
                     }
                 </div>
                 @if (ViewContext.RouteData.Values["Action"]?.ToString() != "Login")
@@ -57,7 +54,7 @@
                                 {
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Edit Users</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Edit Products</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders">View Orders</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="ONNX" asp-action="ReviewOrders">Fraud Orders</a></li>
                                 }
                                 @if (User.Identity.IsAuthenticated)
                                 {

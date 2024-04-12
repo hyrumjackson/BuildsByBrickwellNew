@@ -164,7 +164,7 @@ namespace BuildsByBrickwellNew.Controllers
             {
                 _context.Orders.Add(response);
                 _context.SaveChanges();
-                return RedirectToAction("ReviewOrders", "ONNX");
+                return View("OrderStatus", "Home");
             }
             return View(response);
         }

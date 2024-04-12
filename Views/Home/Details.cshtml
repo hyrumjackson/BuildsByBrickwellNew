@@ -32,11 +32,11 @@
             </div>
             <!-- Product Price & Add to Cart Button -->
             <h3 class="my-4">$@Model.Price</h3>
-            <form asp-action="AddToCart" asp-controller="Cart" method="post">
-                <input type="hidden" asp-for="ProductId" />
-                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                <button type="submit" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</button>
-            </form>
+                <form id="@Model.ProductId" method="post" asp-page="/Cart">
+                    <input type="hidden" asp-for="ProductId" />
+                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                    <button type="submit" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</button>
+                </form>
             <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Products">Back to List</a>
 
             <!-- Product Description -->

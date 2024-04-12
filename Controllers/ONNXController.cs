@@ -38,6 +38,7 @@ namespace BuildsByBrickwellNew.Controllers
         {
             var records = _context.Orders
                 .OrderByDescending(o => o.Date)
+                .Where(o => o.Fraud == 1)
                 .Take(20)
                 .ToList();
 
@@ -52,7 +53,7 @@ namespace BuildsByBrickwellNew.Controllers
 
             var class_type_dict = new Dictionary<int, string>
             {
-                { 0, "Not Fraud"},
+                { 0, "Fraud"},
                 { 1, "Fraud" }
             };
 
