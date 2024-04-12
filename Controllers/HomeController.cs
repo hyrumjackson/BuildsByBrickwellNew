@@ -224,11 +224,6 @@ namespace BuildsByBrickwellNew.Controllers
         }
        
 
-        public IActionResult Checkout()
-        {
-            return View();
-        }
-
         //public IActionResult AdminProducts()
         //{
         //    var products = _context.Products
