@@ -1,7 +1,7 @@
 using BuildsByBrickwellNew.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,17 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+});
+
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var settings = config.Build();
+    config.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(settings["ConnectionStrings:AppConfig"])
+               .Select(KeyFilter.Any, LabelFilter.Null)
+               .Select(KeyFilter.Any, hostingContext.HostingEnvironment.EnvironmentName);
+    });
 });
 
 builder.Services.AddControllersWithViews();

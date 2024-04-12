@@ -1,10 +1,12 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BuildsByBrickwellNew.Controllers
@@ -18,11 +20,68 @@ namespace BuildsByBrickwellNew.Controllers
             _context = temp;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var popularProducts = _context.high_rated_rec.ToList();
+            List<Product> productsToDisplay = new List<Product>();
 
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                var userEmail = User.Identity.Name;
+
+                if (userEmail == "krysten.froehlich@gmail.com")
+                {
+                    var customerRec = await _context.Customer2_Recs.FirstOrDefaultAsync(); // Fetch the single row from the table
+
+                    if (customerRec != null)
+                    {
+                        var recommendedProductIds = new List<int?> { customerRec.Rec1, customerRec.Rec2, customerRec.Rec3 }
+                            .Where(id => id.HasValue)
+                            .Select(id => id.Value)
+                            .ToList();
+
+                        productsToDisplay = await _context.Products
+                            .Where(p => recommendedProductIds.Contains(p.ProductId))
+                            .ToListAsync();
+                    }
+                    else
+                    {
+                        // Fallback to top rated products if no customer recommendation data is found
+                        productsToDisplay = await GetTopRatedProducts();
+                    }
+                }
+                else
+                {
+                    // For other users, fetch the top three entries from Auth_new_user_rec
+                    var newUserRecs = await _context.Auth_New_User_Recs
+                        .Select(x => (int)x.ProductId)
+                        .Take(3) // Assuming we take top three
+                        .ToListAsync();
+
+                    productsToDisplay = await _context.Products
+                        .Where(p => newUserRecs.Contains(p.ProductId))
+                        .ToListAsync();
+                }
+            }
+            else
+            {
+                // For non-logged-in users
+                productsToDisplay = await GetTopRatedProducts();
+            }
+
+            return View(productsToDisplay);
+        }
+
+        private async Task<List<Product>> GetTopRatedProducts()
+        {
+            var highRatedProductIds = await _context.High_Rated_Recs
+                .OrderByDescending(p => p.Rating)
+                .Take(3)
+                .Select(p => p.ProductId)
+                .ToListAsync();
+
+            return await _context.Products
+                .Where(p => highRatedProductIds.Contains((byte)p.ProductId))  // Cast int to byte here
+                .ToListAsync();
         }
 
         public IActionResult Privacy()

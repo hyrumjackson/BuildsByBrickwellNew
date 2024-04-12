@@ -7,7 +7,7 @@ namespace BuildsByBrickwellNew.Models;
 public class Auth_new_user_rec
 {
     [Key]
-    public int? ProductId { get; set; }
+    public byte? ProductId { get; set; }
 
     public string? ProductName { get; set; }
 
