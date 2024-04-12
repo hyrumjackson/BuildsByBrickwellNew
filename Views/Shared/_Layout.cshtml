@@ -38,7 +38,7 @@
                     }
                     else if (User.Identity.IsAuthenticated)
                     {
-                        <h1 class="welcome-text">Welcome, @userName!</h1>
+                        <h3>Welcome, @userName!</h3>
                     }
                 </div>
                 @if (ViewContext.RouteData.Values["Action"]?.ToString() != "Login")
@@ -57,7 +57,7 @@
                                 {
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Edit Users</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Edit Products</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders">(Orders)</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders">View Orders</a></li>
                                 }
                                 @if (User.Identity.IsAuthenticated)
                                 {
@@ -78,6 +78,7 @@
             </div>
         </nav>
     </header>
+    @* <partial name="_CookieConsentPartial" /> *@
     <main role="main" class="container py-4">
         @RenderBody()
     </main>

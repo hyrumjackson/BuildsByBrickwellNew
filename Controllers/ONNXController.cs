@@ -26,7 +26,7 @@ namespace BuildsByBrickwellNew.Controllers
 
             try
             {
-                _session = new InferenceSession("C:\\Users\\jaden\\source\\repos\\BuildsByBrickwellNew\\fraud_detection.onnx");//In here we will need the path of the actual onnx file from google colab
+                _session = new InferenceSession("C:\\Users\\hyrum\\source\\repos\\BuildsByBrickwellNew\\fraud_detection.onnx");//In here we will need the path of the actual onnx file from google colab
                 _logger.LogInformation("ONNX model loaded successfully.");
             }
             catch (Exception ex)
