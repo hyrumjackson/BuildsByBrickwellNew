@@ -2,12 +2,14 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildsByBrickwellNew.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IntexProjectContext _context;
