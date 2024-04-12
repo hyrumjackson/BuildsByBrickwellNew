@@ -89,7 +89,7 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult Products(int pageNum, string? productType, string? productColor, int pageSize = 5)
+        public IActionResult Products(int pageNum, string? productType, string? productColor, int pageSize)
         {
             // Ensure that the page size is within a valid range
             pageSize = Math.Clamp(pageSize, 5, 20);

@@ -1,12 +1,12 @@
 ﻿@model IQueryable<string>
 
-<div class="d-grid gap-2">
-    @* Let's build the home tag *@
-    <div class="dropdown">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+<div class="filters-wrapper mb-3">
+    <!-- Color Filter Dropdown -->
+    <div class="dropdown color-filter-dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="colorDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             Filter by Color
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul class="dropdown-menu" aria-labelledby="colorDropdownMenuButton">
             <li><a class="dropdown-item" asp-controller="Home" asp-action="Products" asp-route-productColor="" asp-route-pageNum="">All Product Colors</a></li>
             @foreach (string pc in Model ?? Enumerable.Empty<string>())
             {
