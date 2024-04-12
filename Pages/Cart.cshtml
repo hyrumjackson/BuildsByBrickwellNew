@@ -57,8 +57,6 @@
                 <td colspan="3" class="text-right">Total:</td>
                 <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
             </strong></p>
-            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="Checkout" style="background-color: #00c3fc; color: #ffffff;">Continue to Checkout</a>
+            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="Checkout" asp-route-total="@Model.Cart?.CalculateTotal().ToString("c")" style="background-color: #00c3fc; color: #ffffff;">Continue to Checkout</a>
         </div>
-    </div>
-</div>
-    
+    </div> 

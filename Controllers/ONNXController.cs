@@ -26,7 +26,7 @@ namespace BuildsByBrickwellNew.Controllers
 
             try
             {
-                _session = new InferenceSession("C:\\Users\\McKay Lush\\source\\repos\\BuildsByBrickwellNew\\fraud_detection.onnx");//In here we will need the path of the actual onnx file from google colab
+                _session = new InferenceSession("C:\\Users\\jaden\\source\\repos\\BuildsByBrickwellNew\\fraud_detection.onnx");//In here we will need the path of the actual onnx file from google colab
                 _logger.LogInformation("ONNX model loaded successfully.");
             }
             catch (Exception ex)
@@ -40,6 +40,14 @@ namespace BuildsByBrickwellNew.Controllers
                 .OrderByDescending(o => o.Date)
                 .Take(20)
                 .ToList();
+
+            /*var transactionId = 1; // TransactionId of the order you want to retrieve
+
+            var records = _context.Orders
+                .Where(o => o.TransactionId == transactionId)
+                .OrderByDescending(o => o.Date)
+                .FirstOrDefault();*/
+
             var predictions = new List<OrderPrediction>();
 
             var class_type_dict = new Dictionary<int, string>
@@ -50,7 +58,7 @@ namespace BuildsByBrickwellNew.Controllers
 
             foreach (var record in records)
             {
-                // Attempt to parse the date if it's not null or empty
+                // Attempt to parse the date if it's not null or empty aka this is hayden's doing
                 DateTime parsedDate = record.Date != null ? DateTime.Parse(record.Date) : DateTime.MinValue;
 
                 var input = new List<float>
@@ -59,10 +67,11 @@ namespace BuildsByBrickwellNew.Controllers
                     (float)record.Time,
                     (float)(record.Amount ?? 0),
 
-                    // Date components as separate features
+                     /*Date components as separate features*/
                     parsedDate.Year,
                     parsedDate.Month,
                     parsedDate.Day,
+
 
                     // One-hot encoding of categorical features
                     record.DayOfWeek == "Mon" ? 1:0,
