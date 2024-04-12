@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BuildsByBrickwellNew</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BuildsByBrickwellNew.styles.css" asp-append-version="true" />
@@ -55,6 +56,7 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Admin Users</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Admin Products</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ProductForm"> Product Form</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders"> Orders</a></li>
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <form asp-controller="Account" asp-action="Logout" method="post">
@@ -78,10 +80,11 @@
     </main>
 
     <footer class="footer mt-auto py-3 footer-custom">
-        <div class="container text-center">
-            &copy; 2024 Builds By Brickwell. All rights reserved. <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
-        </div>
-    </footer>
+    <div class="container text-center">
+        &copy; 2024 Builds By Brickwell. All rights reserved. <a href="https://www.privacypolicies.com/live/7849858d-fd3a-4867-bbeb-4b67551ab22e" class="text-white" target="_blank">Privacy Policy</a>
+    </div>
+</footer>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
