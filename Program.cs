@@ -52,7 +52,7 @@ builder.Services.AddDbContext<IntexProjectContext>(options =>
     );
 });
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders() 
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<IntexProjectContext>();
 

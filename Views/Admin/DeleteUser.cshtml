@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Microsoft.AspNetCore.Identity
+@model IdentityUser
+
+<h1>Confirm Deletion</h1>
+<h2>@Model.UserName</h2>
+<form method="post">
+    <input type="hidden" asp-for="@Model.Id" />
+    <button type="submit">Delete</button>
+    <a class="btn btn-info" asp-controller="Admin" asp-action="AdminUsers">Cancel</a>
+</form>

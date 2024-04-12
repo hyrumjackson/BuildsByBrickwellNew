@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.Linq;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace BuildsByBrickwellNew.Controllers
 {
@@ -15,7 +17,7 @@ namespace BuildsByBrickwellNew.Controllers
 
         public HomeController(IntexProjectContext temp)
         {
-            _context = temp;    
+            _context = temp;
         }
 
         public async Task<IActionResult> Index()
@@ -130,10 +132,6 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult Checkout()
-        {
-            return View();
-        }
 
         public IActionResult OrderStatus()
         {
@@ -161,6 +159,11 @@ namespace BuildsByBrickwellNew.Controllers
         }
 
         public IActionResult AdminUsers ()
+        {
+            return View();
+        }
+
+        public IActionResult Checkout()
         {
             return View();
         }
