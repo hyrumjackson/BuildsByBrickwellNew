@@ -9,34 +9,37 @@
         <li class="breadcrumb-item active" aria-current="page">Checkout</li>
     </ol>
 </nav>
+
 <h2>Checkout</h2>
 <hr />
-<form asp-controller="ONNX" asp-action="ReviewOrders" method="post">
-    <!-- Input field for TransactionId -->
+
+@{
+    var currentDate = DateTime.Now;
+    var currentDayOfWeekNumber = (int)currentDate.DayOfWeek == 0 ? "Sunday" : currentDate.DayOfWeek.ToString();
+    var currentHour = currentDate.Hour;
+}
+
+<form asp-controller="Admin" asp-action="PredictOrder" method="post">
     <div class="form-group">
-        <label asp-for="TransactionId">Transaction ID</label>
-        <input asp-for="TransactionId" class="form-control" placeholder="Enter Transaction ID">
+        <label for="customerID">Customer ID</label>
+        <input type="text" class="form-control" id="customerID" name="CustomerId" value="0" readonly>
     </div>
-    <!-- Input field for CustomerId -->
+
     <div class="form-group">
-        <label asp-for="CustomerId">Customer ID</label>
-        <input asp-for="CustomerId" class="form-control" readonly>
+        <label for="transactionDate">Date</label>
+        <input type="date" class="form-control" id="transactionDate" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" readonly>
     </div>
-    <!-- Input field for Date -->
+
     <div class="form-group">
-        <label asp-for="Date">Date</label>
-        <input asp-for="Date" class="form-control" readonly>
+        <label for="dayOfWeek">Day of the Week</label>
+        <input type="text" class="form-control" id="dayOfWeek" name="DayOfWeek" value="@currentDayOfWeekNumber" readonly>
     </div>
-    <!-- Input field for DayOfWeek -->
+
     <div class="form-group">
-        <label asp-for="DayOfWeek">Day of the Week</label>
-        <input asp-for="DayOfWeek" class="form-control" readonly>
+        <label for="transactionTime">Time</label>
+        <input type="number" class="form-control" id="transactionTime" name="Time" value="@currentHour" readonly>
     </div>
-    <!-- Input field for Time -->
-    <div class="form-group">
-        <label asp-for="Time">Time</label>
-        <input asp-for="Time" class="form-control" readonly>
-    </div>
+
     <!-- Dropdown for EntryMode -->
     <div class="form-group">
         <label asp-for="EntryMode">Entry Mode</label>
@@ -47,6 +50,7 @@
             <option value="CVC">CVC</option>
         </select>
     </div>
+
     <!-- Input field for Amount -->
     <div class="form-group">
         <label asp-for="Amount">Amount</label>
@@ -62,6 +66,7 @@
             <option value="POS">POS</option>
         </select>
     </div>
+
     <!-- Dropdown for CountryOfTransaction -->
     <div class="form-group">
         <label asp-for="CountryOfTransaction">Country of Transaction</label>
@@ -74,6 +79,7 @@
             <option value="Russia">Russia</option>
         </select>
     </div>
+
     <!-- Dropdown for ShippingAddress -->
     <div class="form-group">
         <label asp-for="ShippingAddress">Shipping Country</label>
@@ -86,6 +92,7 @@
             <option value="Russia">Russia</option>
         </select>
     </div>
+
     <!-- Dropdown for Bank -->
     <div class="form-group">
         <label asp-for="Bank">Bank</label>
@@ -100,6 +107,7 @@
             <option value="HSBC">HSBC</option>
         </select>
     </div>
+
     <!-- Dropdown for TypeOfCard -->
     <div class="form-group">
         <label asp-for="TypeOfCard">Type of Card</label>
@@ -109,6 +117,7 @@
             <option value="Visa">Visa</option>
         </select>
     </div>
+
     <button type="submit" class="btn btn-primary">Place Your Order</button>
     <div asp-validation-summary="All"></div>
 </form>

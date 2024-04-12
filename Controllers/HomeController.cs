@@ -1,9 +1,13 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace BuildsByBrickwellNew.Controllers
 {
@@ -13,12 +17,71 @@ namespace BuildsByBrickwellNew.Controllers
 
         public HomeController(IntexProjectContext temp)
         {
-            _context = temp;    
+            _context = temp;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<Product> productsToDisplay = new List<Product>();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userEmail = User.Identity.Name;
+
+                if (userEmail == "krysten.froehlich@gmail.com")
+                {
+                    var customerRec = await _context.Customer2_Recs.FirstOrDefaultAsync(); // Fetch the single row from the table
+
+                    if (customerRec != null)
+                    {
+                        var recommendedProductIds = new List<int?> { customerRec.Rec1, customerRec.Rec2, customerRec.Rec3 }
+                            .Where(id => id.HasValue)
+                            .Select(id => id.Value)
+                            .ToList();
+
+                        productsToDisplay = await _context.Products
+                            .Where(p => recommendedProductIds.Contains(p.ProductId))
+                            .ToListAsync();
+                    }
+                    else
+                    {
+                        // Fallback to top rated products if no customer recommendation data is found
+                        productsToDisplay = await GetTopRatedProducts();
+                    }
+                }
+                else
+                {
+                    // For other users, fetch the top three entries from Auth_new_user_rec
+                    var newUserRecs = await _context.Auth_New_User_Recs
+                        .Select(x => (int)x.ProductId)
+                        .Take(3) // Assuming we take top three
+                        .ToListAsync();
+
+                    productsToDisplay = await _context.Products
+                        .Where(p => newUserRecs.Contains(p.ProductId))
+                        .ToListAsync();
+                }
+            }
+            else
+            {
+                // For non-logged-in users
+                productsToDisplay = await GetTopRatedProducts();
+            }
+
+            return View(productsToDisplay);
+        }
+
+        private async Task<List<Product>> GetTopRatedProducts()
+        {
+            var highRatedProductIds = await _context.High_Rated_Recs
+                .OrderByDescending(p => p.Rating)
+                .Take(3)
+                .Select(p => p.ProductId)
+                .ToListAsync();
+
+            return await _context.Products
+                .Where(p => highRatedProductIds.Contains((byte)p.ProductId))  // Cast int to byte here
+                .ToListAsync();
         }
 
         public IActionResult Privacy()
@@ -95,18 +158,53 @@ namespace BuildsByBrickwellNew.Controllers
             }
             return View(response);
         }
+
         public IActionResult OrderStatus()
         {
             return View();
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var productDetails = _context.Products
-                .Single(x => x.ProductId == id);
+            // Fetch the main product details
+            var productDetails = await _context.Products
+                                               .SingleOrDefaultAsync(x => x.ProductId == id);
+
+            if (productDetails == null)
+            {
+                return NotFound(); // If no product is found, return a NotFound result.
+            }
+
+            // Fetch recommended product IDs from the item-based recommendations table
+            var itemRecs = await _context.Item_Based_Recs
+                                         .FirstOrDefaultAsync(x => x.ProductId == id);
+
+            List<Product> recommendedProducts = new List<Product>();
+            if (itemRecs != null)
+            {
+                // List to hold potential recommended product IDs
+                List<int> recProductIds = new List<int>();
+
+                // Adding recommendations to the list if they exist
+                if (itemRecs.RecommendedProductId1.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId1.Value);
+                if (itemRecs.RecommendedProductId2.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId2.Value);
+                if (itemRecs.RecommendedProductId3.HasValue)
+                    recProductIds.Add(itemRecs.RecommendedProductId3.Value);
+
+                // Fetch the recommended products from the database
+                recommendedProducts = await _context.Products
+                                                    .Where(p => recProductIds.Contains(p.ProductId))
+                                                    .ToListAsync();
+            }
+
+            // Use a ViewModel or ViewBag/ViewData to pass both the product details and the recommended products to the view
+            ViewBag.RecommendedProducts = recommendedProducts;
 
             return View(productDetails);
         }
+
 
         public IActionResult Testing()
         {
@@ -125,6 +223,11 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
        
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
 
         //public IActionResult AdminProducts()
         //{

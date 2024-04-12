@@ -9,6 +9,8 @@ namespace BuildsByBrickwellNew.Pages
         private IntexProjectContext _context;
         public Cart Cart { get; set; }
 
+        public Order order { get; set; }
+
         public CartModel(IntexProjectContext temp, Cart cartService)
         {
             _context = temp;

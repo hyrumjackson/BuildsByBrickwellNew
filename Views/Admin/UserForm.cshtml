@@ -1,9 +1,70 @@
-﻿@* @model IdentityUser
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityUser
 
 <h2>User Details</h2>
 
-<div>
-    <strong>Username:</strong> @Model.UserName <br>
-    <strong>Email:</strong> @Model.Email <br>
-    <!-- Display other properties as needed -->
-</div> *@
+<form asp-action="EditUser" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="UserName">Username</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TwoFactorEnabled">Two-Factor Enabled</label>
+        <input asp-for="TwoFactorEnabled" type="checkbox" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LockoutEnd">Lockout End</label>
+        <input asp-for="LockoutEnd" type="datetime-local" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AccessFailedCount">Access Failed Count</label>
+        <input asp-for="AccessFailedCount" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmailConfirmed">Email Confirmed</label>
+        <input asp-for="EmailConfirmed" type="checkbox" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumberConfirmed">Phone Number Confirmed</label>
+        <input asp-for="PhoneNumberConfirmed" type="checkbox" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LockoutEnabled">Lockout Enabled</label>
+        <input asp-for="LockoutEnabled" type="checkbox" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SecurityStamp">Security Stamp</label>
+        <input asp-for="SecurityStamp" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConcurrencyStamp">Concurrency Stamp</label>
+        <input asp-for="ConcurrencyStamp" class="form-control" />
+    </div>
+
+    <!-- Add other input fields as needed -->
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

@@ -1,12 +1,15 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildsByBrickwellNew.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IntexProjectContext _context;
@@ -98,7 +101,7 @@ namespace BuildsByBrickwellNew.Controllers
             return View(users);
         }
 
-/*        [HttpGet]*/
+        /*        [HttpGet]*/
         /*public IActionResult Edit(int id)
         {
             var recordtoEdit = _context.Products
@@ -116,10 +119,10 @@ namespace BuildsByBrickwellNew.Controllers
             return RedirectToAction("AdminProducts");
         }*/
 
-/*        [HttpGet]
-        public async Task<IActionResult> Edit(string userId)
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -127,10 +130,56 @@ namespace BuildsByBrickwellNew.Controllers
 
             // Create and populate a view model if needed
             // Return the view for editing the user
+
+            return View("UserForm", user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(IdentityUser updatedInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(updatedInfo);
+                _context.SaveChanges();
+                return RedirectToAction("AdminUsers");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Create and populate a view model if needed
+            // Return the view for editing the user
+
             return View(user);
-        }*/
+        }
 
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserConfirmed(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AdminUsers");
+                }
+                else
+                {
+                    // Handle errors, maybe add model errors and return to the confirmation view
+                }
+            }
 
-
+            return RedirectToAction("AdminUsers");
+        }
     }
 }
