@@ -156,18 +156,28 @@ namespace BuildsByBrickwellNew.Controllers
             // Create and populate a view model if needed
             // Return the view for editing the user
 
-            return View( user);
+            return View(user);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteUser(IdentityUser updatedInfo)
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserConfirmed(string id)
         {
-            _context.Remove(updatedInfo);
-            _context.SaveChanges();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AdminUsers");
+                }
+                else
+                {
+                    // Handle errors, maybe add model errors and return to the confirmation view
+                }
+            }
+
             return RedirectToAction("AdminUsers");
         }
-
-
-
     }
 }
