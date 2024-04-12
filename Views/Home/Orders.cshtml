@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Order>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Day of the Week</th>
+                <th scope="col">Time</th>
+                <th scope="col">Entry Mode</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type of Transaction</th>
+                <th scope="col">Country of Transaction</th>
+                <th scope="col">Shipping Address</th>
+                <th scope="col">Bank</th>
+                <th scope="col">Type of Card</th>
+                <th scope="col">Fraud Status</th>
+                <th>Review</th>
+                <th>Flag</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.TransactionId</td>
+                    <td>@order.CustomerId</td>
+                    <td>@order.Date</td>
+                    <td>@order.DayOfWeek</td>
+                    <td>@order.Time</td>
+                    <td>@order.EntryMode</td>
+                    <td>@order.Amount</td>
+                    <td>@order.TypeOfTransaction</td>
+                    <td>@order.CountryOfTransaction</td>
+                    <td>@order.ShippingAddress</td>
+                    <td>@order.Bank</td>
+                    <td>@order.TypeOfCard</td>
+                    <td>@order.Fraud</td>
+                    <td>
+                        <a class="btn btn-info btn-sm" asp-controller="ONNX" asp-action="Review" asp-route-id="@order.TransactionId">Review</a>
+                    </td>
+                    <td>
+                        <form asp-controller="ONNX" asp-action="FlagAsFraud" method="post">
+                            <input type="hidden" name="TransactionId" value="@order.TransactionId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Flag as Fraud</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

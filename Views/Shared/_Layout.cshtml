@@ -55,6 +55,7 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminUsers">Admin Users</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="AdminProducts">Admin Products</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ProductForm"> Product Form</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Orders"> Orders</a></li>
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <form asp-controller="Account" asp-action="Logout" method="post">

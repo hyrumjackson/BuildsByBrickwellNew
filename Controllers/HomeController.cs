@@ -64,16 +64,37 @@ namespace BuildsByBrickwellNew.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Orders()
+        {
+
+            var orders = _context.Orders.ToList();
+            return View(orders);
+        }
+
         public IActionResult About()
         {
             return View();
         }
+        [HttpGet]
 
         public IActionResult Checkout()
         {
-            return View();
+            return View(new Order());
         }
-
+        [HttpPost]
+        public IActionResult Checkout(Order response)
+        {if (ModelState.IsValid)
+            {
+                response.CustomerId = 0;
+                response.Date = "";
+                response.DayOfWeek = "";
+                response.Time = 0;
+                _context.Orders.Add(response);
+                _context.SaveChanges();
+                return View("ConfirmationCheckout", response);
+            }
+            return View(response);
+        }
         public IActionResult OrderStatus()
         {
             return View();
@@ -103,6 +124,7 @@ namespace BuildsByBrickwellNew.Controllers
         {
             return View();
         }
+       
 
         //public IActionResult AdminProducts()
         //{

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<BuildsByBrickwellNew.Models.OrderPrediction>
+
+@{
+    ViewData["Title"] = "Predictions";
+
+    var classTypeDict = new Dictionary<int, string>
+    {
+        { 0, "Not Fraud" },
+        { 1, "Fraud" }
+    };
+}
+
+
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, .05); /* Add a background color to odd rows */
+    }
+
+    .table-striped > tbody > tr:nth-of-type(even) {
+        background-color: #fff; /* Add a background color to even rows */
+    }
+
+    .table-striped > tbody > tr > td,
+    .table-striped > tbody > tr > th {
+        border: 1px solid #dee2e6; /* Add border to table cells */
+    }
+
+    .table-striped > thead > tr > th {
+        border-bottom-width: 2px; /* Add border to table header */
+    }
+
+    .table-striped {
+        border-collapse: collapse; /* Collapse table borders */
+        width: 100%; /* Set table width to 100% */
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .prediction-cell {
+        background-color: white;
+    }
+
+</style>
+
+<h2>Predictions</h2>
+@* <div class="full-width-table">*@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>TransactionId</th>
+            <th>CustomerId</th>
+            <th>Date</th>
+            <th>Day of The Week</th>
+            <th>Time (Military Time)</th>
+            <th>Entry Mode</th>
+            <th>Amount</th>
+            <th>Type of Transaction</th>
+            <th>Country of Transaction</th>
+            <th>Shipping Address</th>
+            <th>Bank</th>
+            <th>Type of card</th>
+            <th>Fraud</th>
+            <th class="prediction-cell">Fraud Prediction</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Orders.TransactionId</td>
+                <td>@item.Orders.CustomerId</td>
+                <td>@item.Orders.Date</td>
+                <td>@item.Orders.DayOfWeek</td>
+                <td>@item.Orders.Time</td>
+                <td>@item.Orders.EntryMode</td>
+                <td>@item.Orders.Amount</td>
+                <td>@item.Orders.TypeOfTransaction</td>
+                <td>@item.Orders.CountryOfTransaction</td>
+                <td>@item.Orders.ShippingAddress</td>
+                <td>@item.Orders.Bank</td>
+                <td>@item.Orders.TypeOfCard</td>
+                <td>@item.Orders.Fraud</td>
+                <td class="prediction-cell">@item.Prediction</td>
+            </tr>
+        }
+    </tbody>
+</table>

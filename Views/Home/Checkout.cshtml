@@ -1,12 +1,7 @@
-﻿@{
+﻿@model BuildsByBrickwellNew.Models.Order
+@{
     ViewData["Title"] = "Checkout";
-    // Dummy customer and payment data for demonstration
-    var customerName = "John Doe";
-    var shippingAddress = "123 Main St, Anytown, USA";
-    var billingAddress = "456 Elm St, Anytown, USA";
-    var paymentMethod = "Visa 0001";
 }
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
@@ -14,37 +9,106 @@
         <li class="breadcrumb-item active" aria-current="page">Checkout</li>
     </ol>
 </nav>
-
-<h2>Information</h2>
+<h2>Checkout</h2>
 <hr />
-
-<div class="row">
-    <div class="col-md-8">
-        <div class="p-3 mb-3" style="background-color: #f5f5f5;">
-            <div class="d-flex justify-content-between">
-                <h5>Shipping Address:</h5>
-                <button class="btn btn-light btn-sm">Change</button>
-            </div>
-            <strong>@customerName</strong>
-            <p>@shippingAddress</p>
-            <hr />
-            <div class="d-flex justify-content-between">
-                <h5>Payment Method:</h5>
-                <button class="btn btn-light btn-sm">Change</button>
-            </div>
-            <strong>Paying with @paymentMethod</strong>
-            <p>@billingAddress</p>
-        </div>
+<form asp-controller="ONNX" asp-action="ReviewOrders" method="post">
+    <!-- Input field for TransactionId -->
+    <div class="form-group">
+        <label asp-for="TransactionId">Transaction ID</label>
+        <input asp-for="TransactionId" class="form-control" placeholder="Enter Transaction ID">
     </div>
-
-    <div class="col-md-4">
-        <div class="summary-div p-3" style="border: 1px solid #ddd;">
-            <p>Subtotal (3 items): $399.97</p>
-            <p>Shipping: $5.99</p>
-            <p>Taxes: $3.45</p>
-            <hr />
-            <p><strong>Total: $62.42</strong></p>
-            <a class="btn w-100" asp-area="" asp-controller="Home" asp-action="OrderStatus" style="background-color: #00c3fc; color: #ffffff;">Place Your Order</a>
-        </div>
+    <!-- Input field for CustomerId -->
+    <div class="form-group">
+        <label asp-for="CustomerId">Customer ID</label>
+        <input asp-for="CustomerId" class="form-control" readonly>
     </div>
-</div>
+    <!-- Input field for Date -->
+    <div class="form-group">
+        <label asp-for="Date">Date</label>
+        <input asp-for="Date" class="form-control" readonly>
+    </div>
+    <!-- Input field for DayOfWeek -->
+    <div class="form-group">
+        <label asp-for="DayOfWeek">Day of the Week</label>
+        <input asp-for="DayOfWeek" class="form-control" readonly>
+    </div>
+    <!-- Input field for Time -->
+    <div class="form-group">
+        <label asp-for="Time">Time</label>
+        <input asp-for="Time" class="form-control" readonly>
+    </div>
+    <!-- Dropdown for EntryMode -->
+    <div class="form-group">
+        <label asp-for="EntryMode">Entry Mode</label>
+        <select asp-for="EntryMode" class="form-control">
+            <option value="">Select Entry Mode</option>
+            <option value="PIN">PIN</option>
+            <option value="Tap">Tap</option>
+            <option value="CVC">CVC</option>
+        </select>
+    </div>
+    <!-- Input field for Amount -->
+    <div class="form-group">
+        <label asp-for="Amount">Amount</label>
+        <input asp-for="Amount" class="form-control" step="0.01" placeholder="Enter Amount">
+    </div>
+    <!-- Dropdown for TypeOfTransaction -->
+    <div class="form-group">
+        <label asp-for="TypeOfTransaction">Type of Transaction</label>
+        <select asp-for="TypeOfTransaction" class="form-control">
+            <option value="">Select Transaction Type</option>
+            <option value="Online">Online</option>
+            <option value="ATM">ATM</option>
+            <option value="POS">POS</option>
+        </select>
+    </div>
+    <!-- Dropdown for CountryOfTransaction -->
+    <div class="form-group">
+        <label asp-for="CountryOfTransaction">Country of Transaction</label>
+        <select asp-for="CountryOfTransaction" class="form-control">
+            <option value="">Select Country</option>
+            <option value="USA">USA</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="China">China</option>
+            <option value="India">India</option>
+            <option value="Russia">Russia</option>
+        </select>
+    </div>
+    <!-- Dropdown for ShippingAddress -->
+    <div class="form-group">
+        <label asp-for="ShippingAddress">Shipping Country</label>
+        <select asp-for="ShippingAddress" class="form-control">
+            <option value="">Select Country</option>
+            <option value="USA">USA</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="China">China</option>
+            <option value="India">India</option>
+            <option value="Russia">Russia</option>
+        </select>
+    </div>
+    <!-- Dropdown for Bank -->
+    <div class="form-group">
+        <label asp-for="Bank">Bank</label>
+        <select asp-for="Bank" class="form-control">
+            <option value="">Select Bank</option>
+            <option value="RBS">RBS</option>
+            <option value="Barclays">Barclays</option>
+            <option value="Halifax">Halifax</option>
+            <option value="Lloyds">Lloyds</option>
+            <option value="Metro">Metro</option>
+            <option value="Monzo">Monzo</option>
+            <option value="HSBC">HSBC</option>
+        </select>
+    </div>
+    <!-- Dropdown for TypeOfCard -->
+    <div class="form-group">
+        <label asp-for="TypeOfCard">Type of Card</label>
+        <select asp-for="TypeOfCard" class="form-control">
+            <option value="">Select Card Type</option>
+            <option value="MasterCard">MasterCard</option>
+            <option value="Visa">Visa</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Place Your Order</button>
+    <div asp-validation-summary="All"></div>
+</form>
