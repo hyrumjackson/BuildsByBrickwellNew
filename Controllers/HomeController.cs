@@ -2,8 +2,10 @@ using System;
 using System.Diagnostics;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace BuildsByBrickwellNew.Controllers
 {
@@ -13,7 +15,7 @@ namespace BuildsByBrickwellNew.Controllers
 
         public HomeController(IntexProjectContext temp)
         {
-            _context = temp;    
+            _context = temp;
         }
 
         public IActionResult Index()
@@ -69,10 +71,6 @@ namespace BuildsByBrickwellNew.Controllers
             return View();
         }
 
-        public IActionResult Checkout()
-        {
-            return View();
-        }
 
         public IActionResult OrderStatus()
         {

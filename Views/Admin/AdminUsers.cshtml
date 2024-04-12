@@ -27,8 +27,8 @@
                         @string.Join(", ", await UserManager.GetRolesAsync(user))
                     </td>
                     <td>
-                        <a class="btn btn-info btn-sm" asp-page="/Admin/EditUser" asp-route-id="@user.Id">Edit</a>
-                        <a class="btn btn-danger btn-sm" asp-page="/Admin/DeleteUser" asp-route-id="@user.Id">Delete</a>
+                        <a class="btn btn-info btn-sm" asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-info btn-sm" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>
                     </td>
                 </tr>
             }

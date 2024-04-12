@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using BuildsByBrickwellNew.Models;
 using BuildsByBrickwellNew.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -98,7 +99,7 @@ namespace BuildsByBrickwellNew.Controllers
             return View(users);
         }
 
-/*        [HttpGet]*/
+        /*        [HttpGet]*/
         /*public IActionResult Edit(int id)
         {
             var recordtoEdit = _context.Products
@@ -116,10 +117,10 @@ namespace BuildsByBrickwellNew.Controllers
             return RedirectToAction("AdminProducts");
         }*/
 
-/*        [HttpGet]
-        public async Task<IActionResult> Edit(string userId)
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -127,8 +128,44 @@ namespace BuildsByBrickwellNew.Controllers
 
             // Create and populate a view model if needed
             // Return the view for editing the user
-            return View(user);
-        }*/
+
+            return View("UserForm", user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(IdentityUser updatedInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(updatedInfo);
+                _context.SaveChanges();
+                return RedirectToAction("AdminUsers");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Create and populate a view model if needed
+            // Return the view for editing the user
+
+            return View( user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(IdentityUser updatedInfo)
+        {
+            _context.Remove(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("AdminUsers");
+        }
 
 
 

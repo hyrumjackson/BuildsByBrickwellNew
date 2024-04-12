@@ -19,7 +19,7 @@
     var currentHour = currentDate.Hour;
 }
 
-<form asp-action="ProcessPayment" method="post">
+<form asp-controller="ONXX" asp-action="Predict" method="post">
     <div class="form-group">
         <label for="customerID">Customer ID</label>
         <input type="text" class="form-control" id="customerID" name="customer_ID" value="0" readonly>
