@@ -82,3 +82,18 @@ body {
     .rating .fa-star.checked {
         color: #ffc107;
     }
+
+.selected-size {
+    background-color: #00c3fc; /* light blue */
+    color: #ffffff;
+}
+
+.not-selected-size {
+    background-color: white; /* gray */
+    color: black;
+}
+
+.btn-light.active, .btn-light:active {
+    background-color: #00c3fc; /* Light blue */
+    color: white;
+}

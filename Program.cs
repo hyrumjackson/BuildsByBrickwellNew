@@ -108,20 +108,28 @@ app.Use(async (context, next) => {
         "script-src 'self'; " +
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " +
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
-        "img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com; " +
+        "img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com https://www.brickeconomy.com; " +
         "frame-src 'self'; " +
         "connect-src 'self' http://localhost:* wss://localhost:* ws://localhost:*");
     await next();
 });
-
-
-
 
 app.UseRouting();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.Use(async (context, next) => {
+    var userManager = context.RequestServices.GetRequiredService<UserManager<IdentityUser>>();
+    if (context.User.Identity.IsAuthenticated)
+    {
+        var user = await userManager.GetUserAsync(context.User);
+        var isAdmin = user != null && await userManager.IsInRoleAsync(user, "Admin");
+        context.Items["IsAdmin"] = isAdmin; // Store admin status in HttpContext
+    }
+    await next();
+});
 
 app.MapControllerRoute("pagenumandtype", "{productType}/Page{pageNum}", new { Controller = "Home", Action = "Products" });
 /*app.MapControllerRoute("pagenumandcolor", "{productColor}/Page{pageNum}", new { Controller = "Home", Action = "Products" });*/
