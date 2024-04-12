@@ -52,9 +52,17 @@ builder.Services.AddDbContext<IntexProjectContext>(options =>
     );
 });
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders() 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<IntexProjectContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+    // Policy for administrative actions
+    options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Administrator"));
+    // Policy for customer actions
+    options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
+});
 
 builder.Services.AddRazorPages();
 
