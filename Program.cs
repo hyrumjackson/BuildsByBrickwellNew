@@ -108,7 +108,7 @@ app.Use(async (context, next) => {
         "script-src 'self'; " +
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; " +
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
-        "img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com; " +
+        "img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com https://www.brickeconomy.com; " +
         "frame-src 'self'; " +
         "connect-src 'self' http://localhost:* wss://localhost:* ws://localhost:*");
     await next();
