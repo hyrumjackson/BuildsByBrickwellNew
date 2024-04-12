@@ -114,14 +114,22 @@ app.Use(async (context, next) => {
     await next();
 });
 
-
-
-
 app.UseRouting();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.Use(async (context, next) => {
+    var userManager = context.RequestServices.GetRequiredService<UserManager<IdentityUser>>();
+    if (context.User.Identity.IsAuthenticated)
+    {
+        var user = await userManager.GetUserAsync(context.User);
+        var isAdmin = user != null && await userManager.IsInRoleAsync(user, "Admin");
+        context.Items["IsAdmin"] = isAdmin; // Store admin status in HttpContext
+    }
+    await next();
+});
 
 app.MapControllerRoute("pagenumandtype", "{productType}/Page{pageNum}", new { Controller = "Home", Action = "Products" });
 /*app.MapControllerRoute("pagenumandcolor", "{productColor}/Page{pageNum}", new { Controller = "Home", Action = "Products" });*/
